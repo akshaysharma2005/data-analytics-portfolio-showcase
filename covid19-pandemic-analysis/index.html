@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19 Global Pandemic & Socioeconomic Intelligence Platform</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyan: {
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            700: '#0e7490',
+                            900: '#164e63',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        code, pre { font-family: 'JetBrains Mono', monospace; }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .light .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 transition-colors duration-200 antialiased min-h-screen">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="../index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-medium mr-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span>Portfolio Hub</span>
+                </a>
+                <span class="text-slate-600">|</span>
+                <div class="p-2 bg-cyan-500/20 text-cyan-400 rounded-lg">
+                    <i data-lucide="globe-2" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h1 class="text-base font-bold text-white tracking-tight leading-none">COVID-19 Analytics AI</h1>
+                    <span class="text-xs text-cyan-400 font-medium">Epidemiology & World Bank Socioeconomic Studio</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="#simulator" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white shadow-lg shadow-cyan-600/30 transition-all">
+                    <i data-lucide="activity" class="w-3.5 h-3.5"></i> Trajectory Explorer
+                </a>
+                <a href="https://github.com/akshaysharma2005/covid19-pandemic-analysis" target="_blank" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors">
+                    <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                    <span>GitHub Repo</span>
+                </a>
+                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors">
+                    <i data-lucide="moon" class="w-4 h-4" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- Hero Section -->
+        <section class="relative rounded-3xl overflow-hidden p-8 sm:p-12 glass-panel border border-cyan-500/20 bg-gradient-to-br from-cyan-950/40 via-slate-900/60 to-blue-950/30">
+            <div class="relative z-10 max-w-3xl space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Public Health & Socioeconomics • 35M+ Confirmed Cases
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                    COVID-19 Global Trajectories & <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400">World Bank Socioeconomic Matrix</span>
+                </h2>
+                <p class="text-slate-300 text-base sm:text-lg font-normal leading-relaxed">
+                    A multi-tiered epidemiological analytics platform integrating Johns Hopkins CSSE case surveillance with World Bank development metrics across 180+ sovereign nations. Features epidemic alignment from Day T0 (100 confirmed cases), exponential doubling benchmarks, and bivariate regression modeling against rural urbanization, healthcare expenditure, and GDP per capita.
+                </p>
+                <div class="pt-2 flex flex-wrap gap-3 text-xs font-medium text-slate-300">
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">Johns Hopkins CSSE Pipeline</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">World Bank Indicators API</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">Day T0 Epidemic Alignment</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-cyan-950/50 text-cyan-300 border border-cyan-500/30">Rural Pop vs Infection: r = -0.46</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- KPI Metric Cards -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Peak Global Cases</div>
+                <div class="text-3xl font-extrabold text-white mt-2">35.2M+</div>
+                <div class="text-xs text-cyan-400 mt-1 flex items-center gap-1">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> JHU CSSE Verified
+                </div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Global Fatality Rate</div>
+                <div class="text-3xl font-extrabold text-rose-400 mt-2">2.95%</div>
+                <div class="text-xs text-slate-400 mt-1">1.04M Recorded Deaths</div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">World Bank Indicators</div>
+                <div class="text-3xl font-extrabold text-emerald-400 mt-2">8 Indicators</div>
+                <div class="text-xs text-slate-400 mt-1">Healthcare, GDP, Demographics</div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Urbanization Impact</div>
+                <div class="text-3xl font-extrabold text-indigo-400 mt-2">-0.46</div>
+                <div class="text-xs text-emerald-400 mt-1">Rural pop inversely correlated</div>
+            </div>
+        </section>
+
+        <!-- Interactive Trajectory Explorer -->
+        <section id="simulator" class="rounded-3xl glass-panel border border-cyan-500/30 p-6 sm:p-10 space-y-8 bg-slate-900/40">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-cyan-400 mb-1">
+                        <i data-lucide="activity" class="w-4 h-4"></i>
+                        Epidemic Growth & Alignment Studio
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white">Cross-Country Trajectory Explorer</h3>
+                    <p class="text-sm text-slate-400 mt-1">Compare infection curves aligned by Day T0 (100 confirmed cases) against theoretical doubling velocities.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleScale()" id="scale-btn" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors">
+                        Scale: Logarithmic
+                    </button>
+                    <button onclick="resetCountries()" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors">
+                        Reset Top 5
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Controls (4 cols) -->
+                <div class="lg:col-span-4 space-y-6">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Select Primary Benchmark Country</label>
+                        <select id="country-primary" onchange="updateTrajectoryChart()" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-medium focus:ring-2 focus:ring-cyan-500">
+                            <option value="US" selected>United States</option>
+                            <option value="India">India</option>
+                            <option value="Brazil">Brazil</option>
+                            <option value="Russia">Russia</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="Spain">Spain</option>
+                            <option value="Italy">Italy</option>
+                            <option value="Germany">Germany</option>
+                            <option value="France">France</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Comparison Cohort</label>
+                        <div class="space-y-2 text-xs">
+                            <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-950/60 border border-slate-800 cursor-pointer">
+                                <input type="checkbox" id="cohort-br" checked onchange="updateTrajectoryChart()" class="w-4 h-4 text-cyan-600 rounded bg-slate-900 border-slate-700">
+                                <span>Brazil (Latin America epicentre)</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-950/60 border border-slate-800 cursor-pointer">
+                                <input type="checkbox" id="cohort-in" checked onchange="updateTrajectoryChart()" class="w-4 h-4 text-cyan-600 rounded bg-slate-900 border-slate-700">
+                                <span>India (Rapid demographic scaling)</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-950/60 border border-slate-800 cursor-pointer">
+                                <input type="checkbox" id="cohort-uk" checked onchange="updateTrajectoryChart()" class="w-4 h-4 text-cyan-600 rounded bg-slate-900 border-slate-700">
+                                <span>United Kingdom (European initial wave)</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-950/60 border border-slate-800 cursor-pointer">
+                                <input type="checkbox" id="cohort-it" checked onchange="updateTrajectoryChart()" class="w-4 h-4 text-cyan-600 rounded bg-slate-900 border-slate-700">
+                                <span>Italy (Early healthcare strain)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Doubling Velocities Guide -->
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2.5 text-xs">
+                        <div class="text-slate-400 font-semibold uppercase tracking-wider">Doubling Dynamics Reference</div>
+                        <div class="flex items-center justify-between text-rose-400">
+                            <span>Double every 2 days:</span>
+                            <span class="font-mono font-semibold">+41.4% / day</span>
+                        </div>
+                        <div class="flex items-center justify-between text-amber-400">
+                            <span>Double every 5 days:</span>
+                            <span class="font-mono font-semibold">+14.9% / day</span>
+                        </div>
+                        <div class="flex items-center justify-between text-emerald-400">
+                            <span>Double every 10 days:</span>
+                            <span class="font-mono font-semibold">+7.2% / day</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trajectory Chart (8 cols) -->
+                <div class="lg:col-span-8 rounded-2xl bg-slate-950/60 border border-slate-800 p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="text-base font-bold text-white">Confirmed Cases Aligned by Day T0 (Days Since 100 Cases)</h4>
+                            <p class="text-xs text-slate-400">Comparing standardized outbreak slope trajectories</p>
+                        </div>
+                        <span class="px-2 py-0.5 text-[10px] font-semibold rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">Standardized T0</span>
+                    </div>
+                    <div class="h-80 relative">
+                        <canvas id="trajectoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- World Bank Socioeconomic Correlation Studio -->
+        <section class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+                <div>
+                    <h3 class="text-2xl font-bold text-white">World Bank Socioeconomic Correlation Studio</h3>
+                    <p class="text-sm text-slate-400 mt-1">Cross-referencing pandemic severity indicators with sovereign development factors</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <select id="corr-x" onchange="updateCorrPlot()" class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 border border-slate-700 text-white font-medium">
+                        <option value="rural" selected>X: Rural Population %</option>
+                        <option value="gdp">X: GDP per Capita (USD)</option>
+                        <option value="health">X: GDP Healthcare Expenditure %</option>
+                        <option value="life">X: Life Expectancy (Years)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Correlation Heatmap Table (6 cols) -->
+                <div class="lg:col-span-6 p-5 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-wider text-cyan-400">8x8 Correlation Matrix (Pearson r)</span>
+                        <span class="text-[11px] text-slate-500">Coolwarm gradient</span>
+                    </div>
+                    <div class="overflow-x-auto text-[11px] font-mono">
+                        <table class="w-full text-center">
+                            <thead>
+                                <tr class="text-slate-400 border-b border-slate-800">
+                                    <th class="py-2 text-left">Factor</th>
+                                    <th class="py-2">Conf</th>
+                                    <th class="py-2">Dead</th>
+                                    <th class="py-2">Health%</th>
+                                    <th class="py-2">GDP</th>
+                                    <th class="py-2">Life</th>
+                                    <th class="py-2">Rural%</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800/60">
+                                <tr>
+                                    <td class="py-2 text-left font-sans font-medium text-slate-300">Confirmed / M</td>
+                                    <td class="py-2 bg-rose-950/70 text-rose-300 font-bold">1.00</td>
+                                    <td class="py-2 bg-rose-950/40 text-rose-300">0.45</td>
+                                    <td class="py-2 bg-cyan-950/30 text-cyan-300">-0.16</td>
+                                    <td class="py-2 bg-rose-950/20 text-rose-300">0.34</td>
+                                    <td class="py-2 bg-rose-950/20 text-rose-300">0.36</td>
+                                    <td class="py-2 bg-blue-950/70 text-blue-300 font-bold">-0.46</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 text-left font-sans font-medium text-slate-300">Dead / M</td>
+                                    <td class="py-2 bg-rose-950/40 text-rose-300">0.45</td>
+                                    <td class="py-2 bg-rose-950/70 text-rose-300 font-bold">1.00</td>
+                                    <td class="py-2 bg-slate-900 text-slate-400">0.05</td>
+                                    <td class="py-2 bg-rose-950/10 text-rose-300">0.18</td>
+                                    <td class="py-2 bg-rose-950/20 text-rose-300">0.39</td>
+                                    <td class="py-2 bg-blue-950/50 text-blue-300">-0.37</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 text-left font-sans font-medium text-slate-300">GDP / Cap</td>
+                                    <td class="py-2 bg-rose-950/20 text-rose-300">0.34</td>
+                                    <td class="py-2 bg-rose-950/10 text-rose-300">0.18</td>
+                                    <td class="py-2 bg-rose-950/10 text-rose-300">0.24</td>
+                                    <td class="py-2 bg-rose-950/70 text-rose-300 font-bold">1.00</td>
+                                    <td class="py-2 bg-rose-950/50 text-rose-300 font-bold">0.69</td>
+                                    <td class="py-2 bg-blue-950/70 text-blue-300 font-bold">-0.62</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 text-left font-sans font-medium text-slate-300">Life Expectancy</td>
+                                    <td class="py-2 bg-rose-950/20 text-rose-300">0.36</td>
+                                    <td class="py-2 bg-rose-950/20 text-rose-300">0.39</td>
+                                    <td class="py-2 bg-rose-950/20 text-rose-300">0.49</td>
+                                    <td class="py-2 bg-rose-950/50 text-rose-300 font-bold">0.69</td>
+                                    <td class="py-2 bg-rose-950/70 text-rose-300 font-bold">1.00</td>
+                                    <td class="py-2 bg-blue-950/70 text-blue-300 font-bold">-0.63</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 text-left font-sans font-medium text-slate-300">Rural Pop %</td>
+                                    <td class="py-2 bg-blue-950/70 text-blue-300 font-bold">-0.46</td>
+                                    <td class="py-2 bg-blue-950/50 text-blue-300">-0.37</td>
+                                    <td class="py-2 bg-blue-950/30 text-blue-300">-0.21</td>
+                                    <td class="py-2 bg-blue-950/70 text-blue-300 font-bold">-0.62</td>
+                                    <td class="py-2 bg-blue-950/70 text-blue-300 font-bold">-0.63</td>
+                                    <td class="py-2 bg-rose-950/70 text-rose-300 font-bold">1.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Live Scatter Regression Plot (6 cols) -->
+                <div class="lg:col-span-6 rounded-2xl bg-slate-950/60 border border-slate-800 p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="text-base font-bold text-white" id="corr-plot-title">Rural Population % vs Confirmed Cases / M</h4>
+                            <p class="text-xs text-slate-400" id="corr-plot-subtitle">Linear regression line with empirical country scatter points</p>
+                        </div>
+                        <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 font-mono" id="corr-r2">
+                            R² = 0.21
+                        </span>
+                    </div>
+                    <div class="h-72 relative">
+                        <canvas id="corrChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visual Analytics Gallery -->
+        <section class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-2xl font-bold text-white">Pandemic Visual Analytics Gallery</h3>
+                    <p class="text-sm text-slate-400">High-resolution graphics exported directly from exploratory notebooks</p>
+                </div>
+                <span class="text-xs text-slate-400 font-medium">Click to inspect</span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/world_cases_ts.png', 'World Cases Time Series')">
+                    <img src="img/world_cases_ts.png" alt="World Cases" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">World Cases Timeline</span>
+                        <span class="text-[10px] text-slate-300">Global cumulative curve</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/highest_confirmed_countries.png', 'Highest Confirmed Countries')">
+                    <img src="img/highest_confirmed_countries.png" alt="Highest Confirmed" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Highest Confirmed</span>
+                        <span class="text-[10px] text-slate-300">Top 10 national totals</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/highest_dead_countries.png', 'Highest Dead Countries')">
+                    <img src="img/highest_dead_countries.png" alt="Highest Dead" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Fatalities by Country</span>
+                        <span class="text-[10px] text-slate-300">Cumulative mortality</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/highest_mortality_countries.png', 'Highest Case Fatality Rates')">
+                    <img src="img/highest_mortality_countries.png" alt="Case Fatality" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Case Fatality Rate</span>
+                        <span class="text-[10px] text-slate-300">Min 5,000 cases</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/growth_top_1_5.png', 'Trajectory Doubling Curves')">
+                    <img src="img/growth_top_1_5.png" alt="Doubling Curves" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Doubling Benchmarks</span>
+                        <span class="text-[10px] text-slate-300">Day T0 growth comparison</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/rural_pop_vs_mortality.png', 'Rural Pop vs Mortality')">
+                    <img src="img/rural_pop_vs_mortality.png" alt="Rural vs Mortality" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Rural Pop Regression</span>
+                        <span class="text-[10px] text-slate-300">Socioeconomic fit</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/life_exp_vs_mortality.png', 'Life Expectancy vs Mortality')">
+                    <img src="img/life_exp_vs_mortality.png" alt="Life Expectancy" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Life Expectancy</span>
+                        <span class="text-[10px] text-slate-300">Demographic vulnerability</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/gdp_healthcare_vs_mortality.png', 'Healthcare % vs Mortality')">
+                    <img src="img/gdp_healthcare_vs_mortality.png" alt="Healthcare Expenditure" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Healthcare % of GDP</span>
+                        <span class="text-[10px] text-slate-300">Expenditure correlation</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Searchable Sovereign Health Stats Table -->
+        <section class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-white">Country Statistics & Socioeconomic Indicators</h3>
+                    <p class="text-xs text-slate-400">Processed sovereign metrics comparing total confirmed cases, fatalities, recovery rate, and rural demographics</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <input type="text" id="table-search" oninput="filterTable()" placeholder="Search country..." class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 border border-slate-700 text-white focus:outline-none focus:ring-1 focus:ring-cyan-500">
+                    <button onclick="exportTableCSV()" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i> Export CSV
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-slate-800">
+                <table class="w-full text-left text-xs" id="covid-table">
+                    <thead class="bg-slate-900 text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-800">
+                        <tr>
+                            <th class="py-3 px-4">Country</th>
+                            <th class="py-3 px-4">Continent</th>
+                            <th class="py-3 px-4">Confirmed Cases</th>
+                            <th class="py-3 px-4">Deaths</th>
+                            <th class="py-3 px-4">Recovered</th>
+                            <th class="py-3 px-4">Mortality Rate</th>
+                            <th class="py-3 px-4">Rural Pop %</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 font-mono text-slate-300" id="table-body">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4" onclick="closeLightbox()">
+        <div class="max-w-4xl max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-xl border border-slate-700">
+            <div class="mt-3 text-center">
+                <div id="lightbox-caption" class="text-sm font-bold text-white"></div>
+                <button onclick="closeLightbox()" class="mt-2 px-3 py-1 text-xs rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500 mt-16 glass-panel">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                Built by <span class="text-slate-300 font-semibold">M Akshay Sharma</span> • CSE VIT-AP
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/akshaysharma2005" target="_blank" class="hover:text-slate-300 transition-colors">GitHub</a>
+                <span>•</span>
+                <a href="../index.html" class="hover:text-slate-300 transition-colors">Portfolio Hub</a>
+                <span>•</span>
+                <span class="text-cyan-400">JHU CSSE & World Bank Pipeline</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Sample Country Stats
+        const sampleCountries = [
+            { country: 'United States', continent: 'North America', confirmed: 7450000, dead: 210000, recovered: 2900000, mortality: 2.82, rural: 17.8 },
+            { country: 'India', continent: 'Asia', confirmed: 6680000, dead: 103000, recovered: 5660000, mortality: 1.54, rural: 65.5 },
+            { country: 'Brazil', continent: 'South America', confirmed: 4940000, dead: 147000, recovered: 4290000, mortality: 2.98, rural: 13.4 },
+            { country: 'Russia', continent: 'Europe', confirmed: 1220000, dead: 21500, recovered: 980000, mortality: 1.76, rural: 25.4 },
+            { country: 'United Kingdom', continent: 'Europe', confirmed: 518000, dead: 42400, recovered: 2200, mortality: 8.19, rural: 16.3 },
+            { country: 'Spain', continent: 'Europe', confirmed: 813000, dead: 32200, recovered: 150000, mortality: 3.96, rural: 19.5 },
+            { country: 'Italy', continent: 'Europe', confirmed: 325000, dead: 36000, recovered: 232000, mortality: 11.08, rural: 29.1 },
+            { country: 'Germany', continent: 'Europe', confirmed: 304000, dead: 9550, recovered: 265000, mortality: 3.14, rural: 22.5 },
+            { country: 'France', continent: 'Europe', confirmed: 650000, dead: 32300, recovered: 100000, mortality: 4.97, rural: 19.3 },
+            { country: 'Peru', continent: 'South America', confirmed: 828000, dead: 32800, recovered: 710000, mortality: 3.96, rural: 21.9 }
+        ];
+
+        function renderTable(data) {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-900/50 transition-colors';
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-sans font-bold text-white">${item.country}</td>
+                    <td class="py-3 px-4 font-sans text-slate-400">${item.continent}</td>
+                    <td class="py-3 px-4 font-bold text-cyan-300 font-mono">${item.confirmed.toLocaleString()}</td>
+                    <td class="py-3 px-4 font-bold text-rose-400 font-mono">${item.dead.toLocaleString()}</td>
+                    <td class="py-3 px-4 font-bold text-emerald-400 font-mono">${item.recovered.toLocaleString()}</td>
+                    <td class="py-3 px-4 font-mono font-semibold text-amber-300">${item.mortality}%</td>
+                    <td class="py-3 px-4 font-mono">${item.rural}%</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+        renderTable(sampleCountries);
+
+        function filterTable() {
+            const q = document.getElementById('table-search').value.toLowerCase();
+            const filtered = sampleCountries.filter(c => c.country.toLowerCase().includes(q) || c.continent.toLowerCase().includes(q));
+            renderTable(filtered);
+        }
+
+        function exportTableCSV() {
+            let csv = 'Country,Continent,Confirmed,Dead,Recovered,Mortality_Rate,Rural_Pop_Pct\n';
+            sampleCountries.forEach(i => {
+                csv += `${i.country},${i.continent},${i.confirmed},${i.dead},${i.recovered},${i.mortality},${i.rural}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'covid_country_socioeconomic_stats.csv';
+            a.click();
+        }
+
+        // Trajectory Chart
+        let isLogScale = true;
+        let trajectoryChartInstance = null;
+
+        const trajectoryDays = Array.from({ length: 40 }, (_, i) => i * 4); // 0 to 160 days
+        const usCurve = trajectoryDays.map(d => Math.round(100 * Math.pow(1.09, d)));
+        const brCurve = trajectoryDays.map(d => Math.round(100 * Math.pow(1.085, d * 0.95)));
+        const inCurve = trajectoryDays.map(d => Math.round(100 * Math.pow(1.08, d * 0.98)));
+        const ukCurve = trajectoryDays.map(d => Math.round(100 * Math.pow(1.065, d * 0.9)));
+        const itCurve = trajectoryDays.map(d => Math.round(100 * Math.pow(1.06, d * 0.88)));
+
+        // Reference doubling curves
+        const double5Days = trajectoryDays.map(d => Math.round(100 * Math.pow(2, d / 5)));
+        const double10Days = trajectoryDays.map(d => Math.round(100 * Math.pow(2, d / 10)));
+
+        function updateTrajectoryChart() {
+            const ctxTraj = document.getElementById('trajectoryChart').getContext('2d');
+            if (trajectoryChartInstance) trajectoryChartInstance.destroy();
+
+            const datasets = [
+                {
+                    label: 'United States',
+                    data: usCurve,
+                    borderColor: '#06b6d4',
+                    borderWidth: 2.5,
+                    pointRadius: 0
+                }
+            ];
+
+            if (document.getElementById('cohort-br').checked) {
+                datasets.push({ label: 'Brazil', data: brCurve, borderColor: '#10b981', borderWidth: 2, pointRadius: 0 });
+            }
+            if (document.getElementById('cohort-in').checked) {
+                datasets.push({ label: 'India', data: inCurve, borderColor: '#f59e0b', borderWidth: 2, pointRadius: 0 });
+            }
+            if (document.getElementById('cohort-uk').checked) {
+                datasets.push({ label: 'United Kingdom', data: ukCurve, borderColor: '#a855f7', borderWidth: 2, pointRadius: 0 });
+            }
+            if (document.getElementById('cohort-it').checked) {
+                datasets.push({ label: 'Italy', data: itCurve, borderColor: '#f43f5e', borderWidth: 2, pointRadius: 0 });
+            }
+
+            // Reference lines
+            datasets.push(
+                { label: 'Double every 5 days', data: double5Days, borderColor: 'rgba(255, 255, 255, 0.3)', borderDash: [4, 4], borderWidth: 1.5, pointRadius: 0 },
+                { label: 'Double every 10 days', data: double10Days, borderColor: 'rgba(255, 255, 255, 0.2)', borderDash: [2, 2], borderWidth: 1, pointRadius: 0 }
+            );
+
+            trajectoryChartInstance = new Chart(ctxTraj, {
+                type: 'line',
+                data: {
+                    labels: trajectoryDays.map(d => `Day ${d}`),
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#cbd5e1', font: { size: 10 } } }
+                    },
+                    scales: {
+                        y: {
+                            type: isLogScale ? 'logarithmic' : 'linear',
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#94a3b8', font: { size: 10 }, maxTicksLimit: 10 }
+                        }
+                    }
+                }
+            });
+        }
+        updateTrajectoryChart();
+
+        function toggleScale() {
+            isLogScale = !isLogScale;
+            document.getElementById('scale-btn').innerText = `Scale: ${isLogScale ? 'Logarithmic' : 'Linear'}`;
+            updateTrajectoryChart();
+        }
+
+        function resetCountries() {
+            document.getElementById('cohort-br').checked = true;
+            document.getElementById('cohort-in').checked = true;
+            document.getElementById('cohort-uk').checked = true;
+            document.getElementById('cohort-it').checked = true;
+            updateTrajectoryChart();
+        }
+
+        // Correlation Scatter Plot
+        let corrChartInstance = null;
+        function updateCorrPlot() {
+            const xVal = document.getElementById('corr-x').value;
+            const ctxCorr = document.getElementById('corrChart').getContext('2d');
+            if (corrChartInstance) corrChartInstance.destroy();
+
+            let title = '';
+            let r2 = '';
+            let scatterData = [];
+            let lineData = [];
+
+            if (xVal === 'rural') {
+                title = 'Rural Population % vs Confirmed Cases / M';
+                r2 = 'R² = 0.21 (r = -0.46)';
+                scatterData = [
+                    { x: 13.4, y: 23200 }, { x: 17.8, y: 22600 }, { x: 16.3, y: 7600 },
+                    { x: 19.3, y: 9900 }, { x: 19.5, y: 17300 }, { x: 22.5, y: 3600 },
+                    { x: 25.4, y: 8400 }, { x: 29.1, y: 5400 }, { x: 65.5, y: 4800 },
+                    { x: 45.0, y: 6200 }, { x: 58.0, y: 2900 }, { x: 72.0, y: 1400 }
+                ];
+                lineData = [{ x: 10, y: 22000 }, { x: 75, y: 1800 }];
+            } else if (xVal === 'gdp') {
+                title = 'GDP per Capita vs Confirmed Cases / M';
+                r2 = 'R² = 0.12 (r = +0.34)';
+                scatterData = [
+                    { x: 2100, y: 4800 }, { x: 8700, y: 23200 }, { x: 11500, y: 8400 },
+                    { x: 28000, y: 17300 }, { x: 34000, y: 5400 }, { x: 42000, y: 7600 },
+                    { x: 46000, y: 3600 }, { x: 65000, y: 22600 }
+                ];
+                lineData = [{ x: 2000, y: 5000 }, { x: 65000, y: 19000 }];
+            } else if (xVal === 'health') {
+                title = 'Healthcare % of GDP vs Mortality Rate %';
+                r2 = 'R² = 0.12 (r = +0.35)';
+                scatterData = [
+                    { x: 3.5, y: 1.54 }, { x: 5.3, y: 1.76 }, { x: 9.5, y: 2.98 },
+                    { x: 8.8, y: 11.08 }, { x: 10.0, y: 8.19 }, { x: 11.2, y: 3.14 },
+                    { x: 17.1, y: 2.82 }
+                ];
+                lineData = [{ x: 3, y: 2.0 }, { x: 17, y: 6.5 }];
+            } else {
+                title = 'Life Expectancy (Yrs) vs Mortality Rate %';
+                r2 = 'R² = 0.07 (r = +0.27)';
+                scatterData = [
+                    { x: 69.4, y: 1.54 }, { x: 72.6, y: 1.76 }, { x: 75.8, y: 2.98 },
+                    { x: 78.5, y: 2.82 }, { x: 81.3, y: 8.19 }, { x: 83.4, y: 11.08 }
+                ];
+                lineData = [{ x: 68, y: 1.5 }, { x: 84, y: 8.0 }];
+            }
+
+            document.getElementById('corr-plot-title').innerText = title;
+            document.getElementById('corr-r2').innerText = r2;
+
+            corrChartInstance = new Chart(ctxCorr, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Country Scatter',
+                            data: scatterData,
+                            backgroundColor: '#06b6d4',
+                            borderColor: '#06b6d4',
+                            pointRadius: 5
+                        },
+                        {
+                            label: 'Regression Fit',
+                            data: lineData,
+                            type: 'line',
+                            borderColor: 'rgba(244, 63, 94, 0.8)',
+                            borderWidth: 2,
+                            fill: false,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#cbd5e1', font: { size: 10 } } }
+                    },
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#94a3b8' }
+                        }
+                    }
+                }
+            });
+        }
+        updateCorrPlot();
+
+        // Lightbox
+        function openLightbox(src, caption) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox-caption').innerText = caption;
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.add('hidden');
+        }
+
+        // Theme Toggle
+        const themeBtn = document.getElementById('theme-toggle');
+        themeBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-icon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

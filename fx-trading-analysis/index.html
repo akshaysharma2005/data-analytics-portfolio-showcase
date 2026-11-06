@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FX Trading Performance & Monte Carlo Risk Analytics</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        amber: {
+                            50: '#fffbeb',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        code, pre { font-family: 'JetBrains Mono', monospace; }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .light .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 transition-colors duration-200 antialiased min-h-screen">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="../index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-medium mr-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span>Portfolio Hub</span>
+                </a>
+                <span class="text-slate-600">|</span>
+                <div class="p-2 bg-amber-500/20 text-amber-400 rounded-lg">
+                    <i data-lucide="trending-up" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h1 class="text-base font-bold text-white tracking-tight leading-none">FX Quant Risk AI</h1>
+                    <span class="text-xs text-amber-400 font-medium">Algorithmic Performance & Monte Carlo Engine</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="#simulator" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-600/30 transition-all">
+                    <i data-lucide="dice-5" class="w-3.5 h-3.5"></i> Monte Carlo Sim
+                </a>
+                <a href="https://github.com/akshaysharma2005/fx-trading-analysis" target="_blank" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors">
+                    <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                    <span>GitHub Repo</span>
+                </a>
+                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors">
+                    <i data-lucide="moon" class="w-4 h-4" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- Hero Section -->
+        <section class="relative rounded-3xl overflow-hidden p-8 sm:p-12 glass-panel border border-amber-500/20 bg-gradient-to-br from-amber-950/40 via-slate-900/60 to-orange-950/30">
+            <div class="relative z-10 max-w-3xl space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Quantitative Finance • 92 Executed Trades • 100K Sim Paths
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                    Algorithmic FX Trading Performance & <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-300 to-orange-400">Monte Carlo Risk Analytics</span>
+                </h2>
+                <p class="text-slate-300 text-base sm:text-lg font-normal leading-relaxed">
+                    Statistical evaluation of an automated FX/CFD trading strategy across EURUSD, USDCHF, GBPUSD, and equity index futures. Unveils how an asymmetric payoff ratio of 5.22x ($56.63 avg win vs $10.84 avg loss) produces a 1.60 Profit Factor despite a 40.22% win rate, validated against geometric loss streak distributions and 100,000-iteration Monte Carlo drawdown resamplings.
+                </p>
+                <div class="pt-2 flex flex-wrap gap-3 text-xs font-medium text-slate-300">
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">Profit Factor: 1.60</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">Win/Loss Payoff: 5.22x</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">Expectancy: $14.85 / trade</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-emerald-950/50 text-emerald-300 border border-emerald-500/30">Net P&L: +$118.02</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- KPI Metric Cards -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Trades</div>
+                <div class="text-3xl font-extrabold text-white mt-2">92</div>
+                <div class="text-xs text-amber-400 mt-1 flex items-center gap-1">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> 37 Wins (40.2%) • 55 Losses
+                </div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Payoff Asymmetry Ratio</div>
+                <div class="text-3xl font-extrabold text-amber-400 mt-2">5.22x</div>
+                <div class="text-xs text-slate-400 mt-1">$56.63 win vs $10.84 loss</div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Profit Factor</div>
+                <div class="text-3xl font-extrabold text-emerald-400 mt-2">1.60</div>
+                <div class="text-xs text-emerald-400 mt-1 flex items-center gap-1">
+                    <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> $1,305 Gross Profit
+                </div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Max Historical Drawdown</div>
+                <div class="text-3xl font-extrabold text-rose-400 mt-2">-14.85%</div>
+                <div class="text-xs text-slate-400 mt-1">-$306.93 Peak-to-Valley</div>
+            </div>
+        </section>
+
+        <!-- Interactive Monte Carlo Simulator -->
+        <section id="simulator" class="rounded-3xl glass-panel border border-amber-500/30 p-6 sm:p-10 space-y-8 bg-slate-900/40">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">
+                        <i data-lucide="dice-5" class="w-4 h-4"></i>
+                        Browser-Native Stochastic Engine
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white">Live Monte Carlo Equity & Ruin Simulator</h3>
+                    <p class="text-sm text-slate-400 mt-1">Simulate 1,000 independent multi-trade trajectories to evaluate drawdown risk and ruin probabilities.</p>
+                </div>
+                <button onclick="runMonteCarloSim()" class="self-start md:self-auto px-4 py-2 text-xs font-bold rounded-lg bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-600/30 transition-all flex items-center gap-1.5">
+                    <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Re-Run Simulation
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Controls (5 cols) -->
+                <div class="lg:col-span-5 space-y-6">
+                    <!-- Win Rate -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-300">System Win Rate (%)</label>
+                            <span class="text-sm font-bold text-amber-400"><span id="winrate-display">40</span>%</span>
+                        </div>
+                        <input type="range" id="sim-winrate" min="30" max="65" value="40" step="1" oninput="document.getElementById('winrate-display').innerText=this.value" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                    </div>
+
+                    <!-- Risk-Reward Ratio -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-300">Reward-to-Risk Payoff (R:R)</label>
+                            <span class="text-sm font-bold text-amber-400"><span id="rr-display">2.5</span> : 1</span>
+                        </div>
+                        <input type="range" id="sim-rr" min="1.0" max="5.5" value="2.5" step="0.1" oninput="document.getElementById('rr-display').innerText=this.value" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                    </div>
+
+                    <!-- Trade Count & Risk per trade -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Number of Trades</label>
+                            <select id="sim-trades" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs font-medium">
+                                <option value="50">50 Trades</option>
+                                <option value="100" selected>100 Trades</option>
+                                <option value="200">200 Trades</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Risk per Trade (%)</label>
+                            <select id="sim-risk" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs font-medium">
+                                <option value="1.0">1.0% Conservative</option>
+                                <option value="2.0" selected>2.0% Standard</option>
+                                <option value="3.5">3.5% Aggressive</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Starting Capital -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Starting Equity Balance</label>
+                        <select id="sim-capital" class="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-medium text-xs">
+                            <option value="10000" selected>$10,000 USD</option>
+                            <option value="25000">$25,000 USD</option>
+                            <option value="50000">$50,000 USD</option>
+                        </select>
+                    </div>
+
+                    <!-- Summary Stats from Simulation -->
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3 text-xs">
+                        <div class="text-slate-400 font-semibold uppercase tracking-wider">Monte Carlo Output Metrics</div>
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span>Median Expected Equity:</span>
+                            <span class="font-mono font-bold text-emerald-400" id="sim-med-equity">$12,450</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span>Probability of Profit:</span>
+                            <span class="font-mono font-bold text-emerald-300" id="sim-prob-profit">88.4%</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span>Median Max Drawdown:</span>
+                            <span class="font-mono font-bold text-rose-400" id="sim-med-dd">-11.6%</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span>Calculated Risk of Ruin (&lt;50%):</span>
+                            <span class="font-mono font-bold text-emerald-400" id="sim-ruin">&lt; 0.05%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulation Equity Cone Chart (7 cols) -->
+                <div class="lg:col-span-7 rounded-2xl bg-slate-950/60 border border-slate-800 p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="text-base font-bold text-white">Monte Carlo Equity Cones (5th, 50th, 95th Percentiles)</h4>
+                            <p class="text-xs text-slate-400">1,000 resampled equity growth paths</p>
+                        </div>
+                        <span class="px-2 py-0.5 text-[10px] font-semibold rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">Stochastic Cone</span>
+                    </div>
+                    <div class="h-80 relative">
+                        <canvas id="mcChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Grid -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Chart 1: Cumulative P&L Curve -->
+            <div class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="text-lg font-bold text-white">Cumulative Trading Equity Curve</h4>
+                        <p class="text-xs text-slate-400">Chronological net P&L ($) across 92 trades</p>
+                    </div>
+                    <span class="px-2.5 py-1 text-[11px] font-semibold rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Live Trading</span>
+                </div>
+                <div class="h-80 relative">
+                    <canvas id="equityChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 2: P&L by Instrument & Order Type -->
+            <div class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="text-lg font-bold text-white">Performance by Instrument & Direction</h4>
+                        <p class="text-xs text-slate-400">Net profit/loss breakdown across currency pairs & CFDs</p>
+                    </div>
+                    <span class="px-2.5 py-1 text-[11px] font-semibold rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20">Attribution</span>
+                </div>
+                <div class="h-80 relative">
+                    <canvas id="mktChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Streak Loss & Geometric Distribution -->
+        <section class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-6">
+            <div>
+                <h3 class="text-2xl font-bold text-white">Geometric Consecutive Loss Distribution</h3>
+                <p class="text-sm text-slate-400">Evaluating theoretical probability of losing streaks vs empirical algorithm behavior</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Streak Table -->
+                <div class="md:col-span-2 p-5 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-4">
+                    <div class="text-xs font-bold uppercase tracking-wider text-amber-400">Theoretical Probability of k Consecutive Losses</div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs font-mono">
+                            <thead class="text-slate-400 border-b border-slate-800 pb-2">
+                                <tr>
+                                    <th class="py-2">Consecutive Losses (k)</th>
+                                    <th class="py-2">Theoretical P(L ≥ k)</th>
+                                    <th class="py-2">Expected in 92 Trades</th>
+                                    <th class="py-2">Empirical Occurrences</th>
+                                    <th class="py-2">Risk Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800 text-slate-300">
+                                <tr>
+                                    <td class="py-2.5 font-sans font-medium text-white">1 Loss</td>
+                                    <td class="py-2.5 text-amber-300">59.8%</td>
+                                    <td class="py-2.5">55.0</td>
+                                    <td class="py-2.5 text-emerald-400">55 trades</td>
+                                    <td class="py-2.5 text-slate-400">Normal Base</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2.5 font-sans font-medium text-white">2 Consecutive</td>
+                                    <td class="py-2.5 text-amber-300">35.7%</td>
+                                    <td class="py-2.5">32.8</td>
+                                    <td class="py-2.5 text-emerald-400">31 streaks</td>
+                                    <td class="py-2.5 text-slate-400">Expected</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2.5 font-sans font-medium text-white">3 Consecutive</td>
+                                    <td class="py-2.5 text-amber-300">21.4%</td>
+                                    <td class="py-2.5">19.6</td>
+                                    <td class="py-2.5 text-emerald-400">18 streaks</td>
+                                    <td class="py-2.5 text-slate-400">Standard Run</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2.5 font-sans font-medium text-white">5 Consecutive</td>
+                                    <td class="py-2.5 text-amber-300">7.7%</td>
+                                    <td class="py-2.5">7.1</td>
+                                    <td class="py-2.5 text-emerald-400">6 streaks</td>
+                                    <td class="py-2.5 text-amber-400">Controlled</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2.5 font-sans font-medium text-white">8 Consecutive (Max Observed)</td>
+                                    <td class="py-2.5 text-amber-300">1.6%</td>
+                                    <td class="py-2.5">1.5</td>
+                                    <td class="py-2.5 text-emerald-400">1 streak</td>
+                                    <td class="py-2.5 text-rose-400">Peak Drawdown</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Mathematical Formula Box -->
+                <div class="p-5 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-3">
+                    <div class="text-xs font-bold uppercase tracking-wider text-amber-400">Mathematical Formulation</div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        For an independent Bernoulli process with loss probability $q = 1 - p = 0.5978$:
+                    </p>
+                    <div class="p-3 rounded-lg bg-amber-950/30 border border-amber-500/20 text-xs font-mono text-amber-300">
+                        P(L >= k) = q^k = (0.5978)^k
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Because each loss is strictly limited to -$10.84 on average, an 8-loss streak causes only -$86.72 in drawdown, readily absorbed by a single $140+ winning trade.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visual Analytics Gallery -->
+        <section class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-2xl font-bold text-white">Trading Notebook Visual Gallery</h3>
+                    <p class="text-sm text-slate-400">Extracted high-resolution analytics graphics from quantitative notebooks</p>
+                </div>
+                <span class="text-xs text-slate-400 font-medium">Click to inspect</span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/profit_histogram.png', 'Profit & Loss Histogram')">
+                    <img src="img/profit_histogram.png" alt="Profit Histogram" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Profit Histogram</span>
+                        <span class="text-[10px] text-slate-300">Distribution skew</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/drawdown.png', 'Drawdown Underwater Analysis')">
+                    <img src="img/drawdown.png" alt="Drawdown" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Drawdown Underwater</span>
+                        <span class="text-[10px] text-slate-300">Peak-to-trough curves</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/probability_of_loss.png', 'Geometric Loss Probability')">
+                    <img src="img/probability_of_loss.png" alt="Probability of Loss" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Streak Loss Probability</span>
+                        <span class="text-[10px] text-slate-300">Theoretical decay curve</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/trading_viz_01.png', 'Hourly Performance')">
+                    <img src="img/trading_viz_01.png" alt="Hourly Performance" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Hourly Performance</span>
+                        <span class="text-[10px] text-slate-300">Time-of-day edge</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Searchable Historical Trade Ledger -->
+        <section class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-white">Executed Trade Ledger (Sample)</h3>
+                    <p class="text-xs text-slate-400">Order-level execution records with entry/exit timestamps, instrument, direction, and profit</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <input type="text" id="table-search" oninput="filterTable()" placeholder="Search symbol..." class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 border border-slate-700 text-white focus:outline-none focus:ring-1 focus:ring-amber-500">
+                    <button onclick="exportTableCSV()" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i> Export CSV
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-slate-800">
+                <table class="w-full text-left text-xs" id="trades-table">
+                    <thead class="bg-slate-900 text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-800">
+                        <tr>
+                            <th class="py-3 px-4">Ticket</th>
+                            <th class="py-3 px-4">Symbol</th>
+                            <th class="py-3 px-4">Type</th>
+                            <th class="py-3 px-4">Open Date</th>
+                            <th class="py-3 px-4">Close Date</th>
+                            <th class="py-3 px-4">P&L ($)</th>
+                            <th class="py-3 px-4">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 font-mono text-slate-300" id="table-body">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4" onclick="closeLightbox()">
+        <div class="max-w-4xl max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-xl border border-slate-700">
+            <div class="mt-3 text-center">
+                <div id="lightbox-caption" class="text-sm font-bold text-white"></div>
+                <button onclick="closeLightbox()" class="mt-2 px-3 py-1 text-xs rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500 mt-16 glass-panel">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                Built by <span class="text-slate-300 font-semibold">M Akshay Sharma</span> • CSE VIT-AP
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/akshaysharma2005" target="_blank" class="hover:text-slate-300 transition-colors">GitHub</a>
+                <span>•</span>
+                <a href="../index.html" class="hover:text-slate-300 transition-colors">Portfolio Hub</a>
+                <span>•</span>
+                <span class="text-amber-400">Quantitative Risk Analytics (Profit Factor 1.60)</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Sample Trades Data
+        const sampleTrades = [
+            { ticket: 1001, symbol: 'US500', type: 'Buy', openDate: '2020-05-19', closeDate: '2020-05-21', profit: 140.30 },
+            { ticket: 1002, symbol: 'USDCHF', type: 'Sell', openDate: '2020-05-20', closeDate: '2020-05-22', profit: 87.54 },
+            { ticket: 1003, symbol: 'EURUSD', type: 'Buy', openDate: '2020-05-22', closeDate: '2020-05-25', profit: 45.10 },
+            { ticket: 1004, symbol: 'GBPUSD', type: 'Buy', openDate: '2020-05-26', closeDate: '2020-05-27', profit: 32.80 },
+            { ticket: 1005, symbol: 'USDCHF', type: 'Sell', openDate: '2020-05-28', closeDate: '2020-05-29', profit: 28.40 },
+            { ticket: 1006, symbol: 'US500', type: 'Sell', openDate: '2020-06-01', closeDate: '2020-06-02', profit: -41.10 },
+            { ticket: 1007, symbol: 'EURUSD', type: 'Sell', openDate: '2020-06-03', closeDate: '2020-06-04', profit: -12.50 },
+            { ticket: 1008, symbol: 'GBPUSD', type: 'Sell', openDate: '2020-06-05', closeDate: '2020-06-05', profit: -9.80 },
+            { ticket: 1009, symbol: 'OILWTI', type: 'Sell', openDate: '2020-06-08', closeDate: '2020-06-09', profit: -8.50 },
+            { ticket: 1010, symbol: 'USDJPY', type: 'Buy', openDate: '2020-06-11', closeDate: '2020-06-12', profit: -7.89 },
+            { ticket: 1011, symbol: 'EURUSD', type: 'Buy', openDate: '2020-06-15', closeDate: '2020-06-16', profit: 139.11 }
+        ];
+
+        function renderTable(data) {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-900/50 transition-colors';
+                const isWin = item.profit > 0;
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-mono text-slate-400">#${item.ticket}</td>
+                    <td class="py-3 px-4 font-sans font-bold text-white">${item.symbol}</td>
+                    <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-sans font-semibold ${item.type === 'Buy' ? 'bg-indigo-950 text-indigo-300' : 'bg-slate-800 text-slate-300'}">${item.type}</span></td>
+                    <td class="py-3 px-4">${item.openDate}</td>
+                    <td class="py-3 px-4">${item.closeDate}</td>
+                    <td class="py-3 px-4 font-semibold ${isWin ? 'text-emerald-400' : 'text-rose-400'}">
+                        ${isWin ? '+' : ''}$${item.profit.toFixed(2)}
+                    </td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-sans font-semibold ${isWin ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-rose-950 text-rose-400 border border-rose-800'}">
+                            ${isWin ? 'WIN' : 'LOSS'}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+        renderTable(sampleTrades);
+
+        function filterTable() {
+            const q = document.getElementById('table-search').value.toLowerCase();
+            const filtered = sampleTrades.filter(item => item.symbol.toLowerCase().includes(q));
+            renderTable(filtered);
+        }
+
+        function exportTableCSV() {
+            let csv = 'Ticket,Symbol,Type,OpenDate,CloseDate,Profit_USD\n';
+            sampleTrades.forEach(i => {
+                csv += `${i.ticket},${i.symbol},${i.type},${i.openDate},${i.closeDate},${i.profit}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'fx_trades_ledger.csv';
+            a.click();
+        }
+
+        // Live Monte Carlo Simulation Engine
+        let mcChartInstance = null;
+
+        function runMonteCarloSim() {
+            const winRate = parseFloat(document.getElementById('sim-winrate').value) / 100;
+            const rr = parseFloat(document.getElementById('sim-rr').value);
+            const numTrades = parseInt(document.getElementById('sim-trades').value);
+            const riskPct = parseFloat(document.getElementById('sim-risk').value) / 100;
+            const startCapital = parseFloat(document.getElementById('sim-capital').value);
+
+            const numSims = 1000;
+            const allCurves = [];
+            let profitableSims = 0;
+            const maxDDs = [];
+
+            for (let s = 0; s < numSims; s++) {
+                let equity = startCapital;
+                let peak = equity;
+                let maxDD = 0;
+                const path = [equity];
+
+                for (let t = 0; t < numTrades; t++) {
+                    const isWin = Math.random() < winRate;
+                    const riskAmt = equity * riskPct;
+                    if (isWin) {
+                        equity += riskAmt * rr;
+                    } else {
+                        equity -= riskAmt;
+                    }
+                    if (equity > peak) peak = equity;
+                    const dd = (peak - equity) / peak;
+                    if (dd > maxDD) maxDD = dd;
+                    path.push(Math.round(equity));
+                }
+                allCurves.push(path);
+                maxDDs.push(maxDD);
+                if (equity > startCapital) profitableSims++;
+            }
+
+            // Percentiles calculation at each trade step
+            const p05 = [];
+            const p50 = [];
+            const p95 = [];
+
+            for (let step = 0; step <= numTrades; step++) {
+                const values = allCurves.map(c => c[step]).sort((a, b) => a - b);
+                p05.push(values[Math.floor(numSims * 0.05)]);
+                p50.push(values[Math.floor(numSims * 0.50)]);
+                p95.push(values[Math.floor(numSims * 0.95)]);
+            }
+
+            // Update stats
+            const medFinal = p50[p50.length - 1];
+            const probProfit = ((profitableSims / numSims) * 100).toFixed(1);
+            maxDDs.sort((a, b) => a - b);
+            const medDD = (maxDDs[Math.floor(numSims * 0.5)] * 100).toFixed(1);
+
+            document.getElementById('sim-med-equity').innerText = `$${medFinal.toLocaleString()}`;
+            document.getElementById('sim-prob-profit').innerText = `${probProfit}%`;
+            document.getElementById('sim-med-dd').innerText = `-${medDD}%`;
+
+            // Ruin probability (equity < 50% start capital)
+            const ruined = allCurves.filter(c => Math.min(...c) < startCapital * 0.5).length;
+            const ruinPct = ((ruined / numSims) * 100).toFixed(2);
+            document.getElementById('sim-ruin').innerText = ruinPct > 0 ? `${ruinPct}%` : '< 0.05%';
+
+            // Update Chart
+            const labels = Array.from({ length: numTrades + 1 }, (_, i) => i);
+            if (mcChartInstance) {
+                mcChartInstance.destroy();
+            }
+
+            const ctxMC = document.getElementById('mcChart').getContext('2d');
+            mcChartInstance = new Chart(ctxMC, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '95th Percentile (Optimistic)',
+                            data: p95,
+                            borderColor: 'rgba(52, 211, 153, 0.8)',
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            fill: false
+                        },
+                        {
+                            label: 'Median Path (50th)',
+                            data: p50,
+                            borderColor: 'rgb(245, 158, 11)',
+                            borderWidth: 2.5,
+                            pointRadius: 0,
+                            fill: false
+                        },
+                        {
+                            label: '5th Percentile (Conservative)',
+                            data: p05,
+                            borderColor: 'rgba(239, 68, 68, 0.8)',
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#cbd5e1', font: { size: 10 } } }
+                    },
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#94a3b8', font: { size: 10 }, maxTicksLimit: 10 }
+                        }
+                    }
+                }
+            });
+        }
+        runMonteCarloSim();
+
+        // Chart 1: Equity Curve
+        const ctxEquity = document.getElementById('equityChart').getContext('2d');
+        const equityPoints = [0, 45, 98, 130, 115, 102, 140, 220, 260, 245, 290, 310, 280, 250, 230, 210, 275, 340, 315, 300, 360, 410, 385, 443];
+        new Chart(ctxEquity, {
+            type: 'line',
+            data: {
+                labels: Array.from({ length: equityPoints.length }, (_, i) => `T${i * 4}`),
+                datasets: [{
+                    label: 'Cumulative Net Profit ($)',
+                    data: equityPoints,
+                    borderColor: 'rgb(16, 185, 129)',
+                    backgroundColor: 'rgba(16, 185, 129, 0.15)',
+                    fill: true,
+                    tension: 0.3,
+                    borderWidth: 2,
+                    pointRadius: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Market Attribution
+        const ctxMkt = document.getElementById('mktChart').getContext('2d');
+        new Chart(ctxMkt, {
+            type: 'bar',
+            data: {
+                labels: ['USDCHF Sell', 'EURUSD Buy', 'GBPUSD Buy', 'US500 Sell', 'USDJPY Buy', 'OILWTI Sell', 'GBPUSD Sell', 'EURUSD Sell', 'US500 Buy'],
+                datasets: [{
+                    label: 'Net P&L ($)',
+                    data: [180.18, 82.49, 39.59, 3.86, -7.89, -12.07, -33.66, -49.54, -76.74],
+                    backgroundColor: [
+                        '#10b981', '#10b981', '#10b981', '#10b981',
+                        '#f43f5e', '#f43f5e', '#f43f5e', '#f43f5e', '#f43f5e'
+                    ],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8', font: { size: 9 }, maxRotation: 45 }
+                    }
+                }
+            }
+        });
+
+        // Lightbox
+        function openLightbox(src, caption) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox-caption').innerText = caption;
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.add('hidden');
+        }
+
+        // Theme Toggle
+        const themeBtn = document.getElementById('theme-toggle');
+        themeBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-icon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

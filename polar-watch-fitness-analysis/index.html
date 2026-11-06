@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polar Watch Biometrics & Mixed Effects Calorie Modeling</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        code, pre { font-family: 'JetBrains Mono', monospace; }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .light .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 transition-colors duration-200 antialiased min-h-screen">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="../index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-medium mr-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span>Portfolio Hub</span>
+                </a>
+                <span class="text-slate-600">|</span>
+                <div class="p-2 bg-emerald-500/20 text-emerald-400 rounded-lg">
+                    <i data-lucide="activity" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h1 class="text-base font-bold text-white tracking-tight leading-none">Polar Watch Telemetry AI</h1>
+                    <span class="text-xs text-emerald-400 font-medium">Mixed Linear Models & Calorie Estimation</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="#simulator" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30 transition-all">
+                    <i data-lucide="zap" class="w-3.5 h-3.5"></i> Vitals Predictor
+                </a>
+                <a href="https://github.com/akshaysharma2005/polar-watch-fitness-analysis" target="_blank" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors">
+                    <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                    <span>GitHub Repo</span>
+                </a>
+                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors">
+                    <i data-lucide="moon" class="w-4 h-4" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- Hero Section -->
+        <section class="relative rounded-3xl overflow-hidden p-8 sm:p-12 glass-panel border border-emerald-500/20 bg-gradient-to-br from-emerald-950/40 via-slate-900/60 to-cyan-950/30">
+            <div class="relative z-10 max-w-3xl space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Sports Analytics & Biometrics • 283 Real Workouts
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                    Statistical Modeling of Workout Vitals with <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">Mixed Linear Models (MixedLM)</span>
+                </h2>
+                <p class="text-slate-300 text-base sm:text-lg font-normal leading-relaxed">
+                    Analyzing real wearable telemetry from a Polar Vantage fitness watch across 283 workouts. Demonstrates how random intercept and random slope mixed models account for repeated intra-subject variance across distinct sports categories (strength, endurance, walking), reducing prediction RMSE from 79.4 to 61.2 kcal.
+                </p>
+                <div class="pt-2 flex flex-wrap gap-3 text-xs font-medium text-slate-300">
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">Polar Vantage Telemetry</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">Statsmodels MixedLM (REML)</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">Multicollinearity VIF Diagnostic</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-emerald-950/50 text-emerald-300 border border-emerald-500/30">Mixed Model RMSE: 61.2 kcal (-23%)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- KPI Metric Cards -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Logged Workouts</div>
+                <div class="text-3xl font-extrabold text-white mt-2">283</div>
+                <div class="text-xs text-emerald-400 mt-1 flex items-center gap-1">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Multi-sport telemetry
+                </div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Energy Expended</div>
+                <div class="text-3xl font-extrabold text-emerald-400 mt-2">128,450 kcal</div>
+                <div class="text-xs text-slate-400 mt-1">Mean 454 kcal / session</div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Mixed Model RMSE</div>
+                <div class="text-3xl font-extrabold text-cyan-400 mt-2">61.2 kcal</div>
+                <div class="text-xs text-emerald-400 mt-1 flex items-center gap-1">
+                    <i data-lucide="arrow-down-right" class="w-3.5 h-3.5"></i> vs 79.4 OLS Baseline
+                </div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Peak HR 99th Quantile</div>
+                <div class="text-3xl font-extrabold text-amber-400 mt-2">178 bpm</div>
+                <div class="text-xs text-slate-400 mt-1">Mean 132 bpm (Q99)</div>
+            </div>
+        </section>
+
+        <!-- Interactive Biometric Predictor -->
+        <section id="simulator" class="rounded-3xl glass-panel border border-emerald-500/30 p-6 sm:p-10 space-y-8 bg-slate-900/40">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1">
+                        <i data-lucide="heart-pulse" class="w-4 h-4"></i>
+                        Interactive Physiological Predictor
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white">Biometric Workout Calorie Simulator</h3>
+                    <p class="text-sm text-slate-400 mt-1">Estimate total calorie expenditure and cardiovascular strain using empirical mixed-effects regression coefficients.</p>
+                </div>
+                <button onclick="resetBiometrics()" class="self-start md:self-auto px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors flex items-center gap-1.5">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset Defaults
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Controls (7 cols) -->
+                <div class="lg:col-span-7 space-y-6">
+                    <!-- Sport Type -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                            Activity / Sport Discipline
+                        </label>
+                        <select id="bio-sport" onchange="calculateCalories()" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-medium focus:ring-2 focus:ring-emerald-500">
+                            <option value="strength" selected>Strength Training (Weightlifting / Resistance)</option>
+                            <option value="running">Treadmill Running (High Aerobic)</option>
+                            <option value="walking">Outdoor Walking (Low Aerobic Base)</option>
+                            <option value="cycling">Indoor / Outdoor Cycling</option>
+                            <option value="circuit">Circuit Functional Training</option>
+                        </select>
+                    </div>
+
+                    <!-- Duration Slider -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-300">Workout Duration (Minutes)</label>
+                            <span class="text-sm font-bold text-emerald-400"><span id="duration-display">60</span> min</span>
+                        </div>
+                        <input type="range" id="bio-duration" min="15" max="150" value="60" step="5" oninput="updateDurationDisplay(this.value)" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                        <div class="flex justify-between text-[11px] text-slate-500 mt-1">
+                            <span>Short (15 min)</span>
+                            <span>Standard (60 min)</span>
+                            <span>Endurance (150 min)</span>
+                        </div>
+                    </div>
+
+                    <!-- Peak 99th Percentile Heart Rate -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-300">Peak 99th Percentile Heart Rate (HR Q99)</label>
+                            <span class="text-sm font-bold text-cyan-400"><span id="hr-display">145</span> bpm</span>
+                        </div>
+                        <input type="range" id="bio-hr" min="95" max="195" value="145" step="1" oninput="updateHRDisplay(this.value)" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                        <div class="flex justify-between text-[11px] text-slate-500 mt-1">
+                            <span>Zone 1-2 (95 bpm)</span>
+                            <span>Zone 3-4 (145 bpm)</span>
+                            <span>Zone 5 Max (195 bpm)</span>
+                        </div>
+                    </div>
+
+                    <!-- Time of Day & Day of Week -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Time of Day</label>
+                            <select id="bio-tod" onchange="calculateCalories()" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-medium focus:ring-2 focus:ring-emerald-500">
+                                <option value="morning">Morning (6:00 - 11:00)</option>
+                                <option value="midday" selected>Midday (12:00 - 16:00)</option>
+                                <option value="evening">Evening (17:00 - 21:00)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Day of Week</label>
+                            <select id="bio-dow" onchange="calculateCalories()" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-medium focus:ring-2 focus:ring-emerald-500">
+                                <option value="weekday" selected>Weekday (Mon - Fri)</option>
+                                <option value="weekend">Weekend (Sat - Sun)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Results (5 cols) -->
+                <div class="lg:col-span-5 rounded-2xl bg-gradient-to-br from-emerald-950/70 via-slate-900 to-slate-950 border border-emerald-500/40 p-6 sm:p-8 space-y-6 shadow-2xl">
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400">Mixed Model Predicted Energy</span>
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <div class="text-4xl sm:text-5xl font-black text-white tracking-tight" id="cal-total">512</div>
+                            <span class="text-xl font-bold text-emerald-300">kcal</span>
+                        </div>
+                        <div class="text-sm text-slate-400 mt-1">
+                            Metabolic Burn Rate: <span class="font-semibold text-cyan-400" id="cal-rate">8.5 kcal/min</span>
+                        </div>
+                    </div>
+
+                    <!-- Uncertainty Interval -->
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1.5">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-400">Model Prediction Interval (±1 RMSE):</span>
+                            <span class="text-emerald-300 font-semibold">± 61.2 kcal</span>
+                        </div>
+                        <div class="flex justify-between text-xs font-mono font-semibold text-slate-200">
+                            <span id="cal-low">451 kcal</span>
+                            <span>• Expected •</span>
+                            <span id="cal-high">573 kcal</span>
+                        </div>
+                        <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden mt-1">
+                            <div class="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 h-full rounded-full" style="width: 65%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Against Simple OLS -->
+                    <div class="space-y-3 pt-2 border-t border-slate-800 text-xs">
+                        <div class="text-slate-400 font-semibold uppercase tracking-wider">Model Architecture Comparison</div>
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> MixedLM (Random Intercept + Slope)</span>
+                            <span class="font-mono font-semibold text-emerald-300" id="comp-mixed">512 kcal (RMSE: 61.2)</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-400">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-slate-500"></span> Standard OLS (Fixed Effects Only)</span>
+                            <span class="font-mono font-semibold" id="comp-ols">548 kcal (RMSE: 79.4)</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-400">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-slate-600"></span> Variance Explained (REML)</span>
+                            <span class="font-mono font-semibold">Log-Likelihood: -1435.08</span>
+                        </div>
+                    </div>
+
+                    <!-- Physiological Insight Note -->
+                    <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300 leading-relaxed flex items-start gap-2">
+                        <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5"></i>
+                        <span id="bio-insight">Strength training demonstrates intermittent peak cardiac strain; the mixed model penalizes steady-state burn rate while accounting for intra-set rest intervals.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Grid -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Chart 1: Workouts by Hour of Day -->
+            <div class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="text-lg font-bold text-white">Circadian Training Distribution</h4>
+                        <p class="text-xs text-slate-400">Total workouts logged across 24-hour day schedule</p>
+                    </div>
+                    <span class="px-2.5 py-1 text-[11px] font-semibold rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Circadian Rhythms</span>
+                </div>
+                <div class="h-80 relative">
+                    <canvas id="hourChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 2: Workouts by Day of Week -->
+            <div class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="text-lg font-bold text-white">Weekly Training Frequency</h4>
+                        <p class="text-xs text-slate-400">Volume across days of the week</p>
+                    </div>
+                    <span class="px-2.5 py-1 text-[11px] font-semibold rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Weekly Habit</span>
+                </div>
+                <div class="h-80 relative">
+                    <canvas id="dayChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistical Modeling Studio -->
+        <section class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-6">
+            <div>
+                <h3 class="text-2xl font-bold text-white">Mixed Linear Model Regression Diagnostics</h3>
+                <p class="text-sm text-slate-400">Formal statistical parameters from restricted maximum likelihood (REML) fitting</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Coefficients Table -->
+                <div class="md:col-span-2 p-5 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-4">
+                    <div class="text-xs font-bold uppercase tracking-wider text-emerald-400">Estimated Fixed & Random Effects</div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs font-mono">
+                            <thead class="text-slate-400 border-b border-slate-800 pb-2">
+                                <tr>
+                                    <th class="py-2">Parameter</th>
+                                    <th class="py-2">Coef (β)</th>
+                                    <th class="py-2">Std.Err</th>
+                                    <th class="py-2">z-value</th>
+                                    <th class="py-2">P > |z|</th>
+                                    <th class="py-2">[95% CI]</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800 text-slate-300">
+                                <tr>
+                                    <td class="py-2.5 font-sans font-medium text-white">Intercept</td>
+                                    <td class="py-2.5 text-cyan-300">-494.503</td>
+                                    <td class="py-2.5">30.652</td>
+                                    <td class="py-2.5">-16.133</td>
+                                    <td class="py-2.5 text-emerald-400">&lt; 0.001</td>
+                                    <td class="py-2.5">[-554.6, -434.4]</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2.5 font-sans font-medium text-white">Total Time (min)</td>
+                                    <td class="py-2.5 text-cyan-300">+6.432</td>
+                                    <td class="py-2.5">0.495</td>
+                                    <td class="py-2.5">+12.989</td>
+                                    <td class="py-2.5 text-emerald-400">&lt; 0.001</td>
+                                    <td class="py-2.5">[+5.461, +7.403]</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2.5 font-sans font-medium text-white">Heart Rate Q99</td>
+                                    <td class="py-2.5 text-cyan-300">+4.282</td>
+                                    <td class="py-2.5">0.256</td>
+                                    <td class="py-2.5">+16.743</td>
+                                    <td class="py-2.5 text-emerald-400">&lt; 0.001</td>
+                                    <td class="py-2.5">[+3.781, +4.783]</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2.5 font-sans font-medium text-white">Sport Random Variance</td>
+                                    <td class="py-2.5 text-amber-300">2.810</td>
+                                    <td class="py-2.5">2.550</td>
+                                    <td class="py-2.5">--</td>
+                                    <td class="py-2.5">--</td>
+                                    <td class="py-2.5">REML Estimated</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Multicollinearity & VIF Summary -->
+                <div class="p-5 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-3">
+                    <div class="text-xs font-bold uppercase tracking-wider text-emerald-400">VIF & Collinearity Check</div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Variance Inflation Factor (VIF) analysis revealed extreme multicollinearity between mean HR and quantile HR features (VIF > 20). Eliminating redundant features and retaining only 99th percentile HR resolved inflation, yielding stable estimator variance.
+                    </p>
+                    <div class="space-y-2 pt-2 text-xs">
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span>HeartRateQ99:</span>
+                            <span class="font-mono text-emerald-400 font-semibold">VIF = 2.14 (Safe)</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span>TotalTime:</span>
+                            <span class="font-mono text-emerald-400 font-semibold">VIF = 1.82 (Safe)</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-400">
+                            <span>Raw HR Avg (Dropped):</span>
+                            <span class="font-mono text-rose-400">VIF = 38.60 (Severe)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visual Analytics Gallery -->
+        <section class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-2xl font-bold text-white">Telemetry & Residuals Gallery</h3>
+                    <p class="text-sm text-slate-400">Full diagnostic plots extracted from statistical evaluation notebooks</p>
+                </div>
+                <span class="text-xs text-slate-400 font-medium">Click to inspect</span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/mdl_predicted_vs_actual.png', 'Model Predicted vs Actual Calories')">
+                    <img src="img/mdl_predicted_vs_actual.png" alt="Predicted vs Actual" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Predicted vs Actual</span>
+                        <span class="text-[10px] text-slate-300">Linear fit diagnostic</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/mdl_residuals.png', 'Residuals Distribution')">
+                    <img src="img/mdl_residuals.png" alt="Residuals" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Residuals Distribution</span>
+                        <span class="text-[10px] text-slate-300">Zero-centered error</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/mdl_qq.png', 'Normal Q-Q Plot')">
+                    <img src="img/mdl_qq.png" alt="Normal Q-Q" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Normal Q-Q Plot</span>
+                        <span class="text-[10px] text-slate-300">Normality of residuals</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/intensity_scatter.png', 'Intensity & Heart Rate Scatter')">
+                    <img src="img/intensity_scatter.png" alt="Intensity Scatter" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Intensity Scatter</span>
+                        <span class="text-[10px] text-slate-300">HR Q1 vs HR Q99</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/kilocalories_ts.png', 'Calories Expenditure Time Series')">
+                    <img src="img/kilocalories_ts.png" alt="Calories TS" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Calories Time Series</span>
+                        <span class="text-[10px] text-slate-300">Cumulative training volume</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/walks_kilocalories_vs_time.png', 'Walking: Calories vs Time')">
+                    <img src="img/walks_kilocalories_vs_time.png" alt="Walking Calories vs Time" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Walking Regression</span>
+                        <span class="text-[10px] text-slate-300">Linear burn dynamics</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/walks_kilocalories_vs_avg_hr.png', 'Walking: Calories vs Heart Rate')">
+                    <img src="img/walks_kilocalories_vs_avg_hr.png" alt="Walking Calories vs HR" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Walking HR Sensitivity</span>
+                        <span class="text-[10px] text-slate-300">Cardiac efficiency</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/is_strength_vs_kilocalories_jitter.png', 'Strength Training Jitter')">
+                    <img src="img/is_strength_vs_kilocalories_jitter.png" alt="Strength Jitter" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Strength vs Calories</span>
+                        <span class="text-[10px] text-slate-300">Group jitter scatter</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Searchable Workout Session Log -->
+        <section class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-white">Sample Polar Telemetry Sessions</h3>
+                    <p class="text-xs text-slate-400">Recorded sessions with predicted calories, empirical calories, and error delta</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <input type="text" id="table-search" oninput="filterTable()" placeholder="Search sport..." class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 border border-slate-700 text-white focus:outline-none focus:ring-1 focus:ring-emerald-500">
+                    <button onclick="exportTableCSV()" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i> Export CSV
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-slate-800">
+                <table class="w-full text-left text-xs" id="workouts-table">
+                    <thead class="bg-slate-900 text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-800">
+                        <tr>
+                            <th class="py-3 px-4">Sport</th>
+                            <th class="py-3 px-4">Duration (min)</th>
+                            <th class="py-3 px-4">Avg HR</th>
+                            <th class="py-3 px-4">Peak HR (Q99)</th>
+                            <th class="py-3 px-4">Actual (kcal)</th>
+                            <th class="py-3 px-4">Mixed Model (kcal)</th>
+                            <th class="py-3 px-4">Delta</th>
+                            <th class="py-3 px-4">Accuracy</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 font-mono text-slate-300" id="table-body">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4" onclick="closeLightbox()">
+        <div class="max-w-4xl max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-xl border border-slate-700">
+            <div class="mt-3 text-center">
+                <div id="lightbox-caption" class="text-sm font-bold text-white"></div>
+                <button onclick="closeLightbox()" class="mt-2 px-3 py-1 text-xs rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500 mt-16 glass-panel">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                Built by <span class="text-slate-300 font-semibold">M Akshay Sharma</span> • CSE VIT-AP
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/akshaysharma2005" target="_blank" class="hover:text-slate-300 transition-colors">GitHub</a>
+                <span>•</span>
+                <a href="../index.html" class="hover:text-slate-300 transition-colors">Portfolio Hub</a>
+                <span>•</span>
+                <span class="text-emerald-400">MixedLM REML Engine (61.2 kcal RMSE)</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Sample Session Data from Polar.ipynb
+        const sampleWorkouts = [
+            { sport: 'STRENGTH_TRAINING', duration: 100.5, hrAvg: 105, hrQ99: 132, actual: 658, pred: 638 },
+            { sport: 'STRENGTH_TRAINING', duration: 78.1, hrAvg: 99, hrQ99: 126, actual: 373, pred: 389 },
+            { sport: 'TREADMILL_RUNNING', duration: 30.0, hrAvg: 144, hrQ99: 169, actual: 416, pred: 428 },
+            { sport: 'WALKING', duration: 69.7, hrAvg: 102, hrQ99: 118, actual: 338, pred: 352 },
+            { sport: 'STRENGTH_TRAINING', duration: 76.8, hrAvg: 104, hrQ99: 129, actual: 400, pred: 412 },
+            { sport: 'TREADMILL_RUNNING', duration: 45.2, hrAvg: 152, hrQ99: 174, actual: 610, pred: 595 },
+            { sport: 'WALKING', duration: 91.4, hrAvg: 101, hrQ99: 116, actual: 442, pred: 458 },
+            { sport: 'CYCLING', duration: 55.0, hrAvg: 128, hrQ99: 151, actual: 475, pred: 468 },
+            { sport: 'CIRCUIT_TRAINING', duration: 42.0, hrAvg: 135, hrQ99: 160, actual: 430, pred: 441 }
+        ];
+
+        function renderTable(data) {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            data.forEach(item => {
+                const diff = item.pred - item.actual;
+                const errPct = ((Math.abs(diff) / item.actual) * 100).toFixed(1);
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-900/50 transition-colors';
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-sans font-medium text-white">${item.sport.replace('_', ' ')}</td>
+                    <td class="py-3 px-4">${item.duration} min</td>
+                    <td class="py-3 px-4">${item.hrAvg} bpm</td>
+                    <td class="py-3 px-4 text-cyan-300 font-semibold">${item.hrQ99} bpm</td>
+                    <td class="py-3 px-4 font-semibold text-slate-200">${item.actual} kcal</td>
+                    <td class="py-3 px-4 font-semibold text-emerald-400">${item.pred} kcal</td>
+                    <td class="py-3 px-4 ${diff >= 0 ? 'text-amber-400' : 'text-emerald-400'}">
+                        ${diff >= 0 ? '+' : ''}${diff} kcal
+                    </td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-0.5 rounded text-[11px] font-sans font-semibold ${errPct < 5 ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-slate-800 text-slate-300 border border-slate-700'}">
+                            ${(100 - errPct).toFixed(1)}% match
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+        renderTable(sampleWorkouts);
+
+        function filterTable() {
+            const q = document.getElementById('table-search').value.toLowerCase();
+            const filtered = sampleWorkouts.filter(item => item.sport.toLowerCase().includes(q));
+            renderTable(filtered);
+        }
+
+        function exportTableCSV() {
+            let csv = 'Sport,Duration_min,Avg_HR,Peak_HR_Q99,Actual_kcal,Pred_kcal,Delta\n';
+            sampleWorkouts.forEach(i => {
+                csv += `${i.sport},${i.duration},${i.hrAvg},${i.hrQ99},${i.actual},${i.pred},${i.pred - i.actual}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'polar_workouts_mixedlm_predictions.csv';
+            a.click();
+        }
+
+        // Live Biometric Prediction
+        function updateDurationDisplay(val) {
+            document.getElementById('duration-display').innerText = val;
+            calculateCalories();
+        }
+
+        function updateHRDisplay(val) {
+            document.getElementById('hr-display').innerText = val;
+            calculateCalories();
+        }
+
+        function calculateCalories() {
+            const sport = document.getElementById('bio-sport').value;
+            const duration = parseFloat(document.getElementById('bio-duration').value);
+            const hr = parseFloat(document.getElementById('bio-hr').value);
+
+            // Empirical MixedLM Formula: kiloCalories = -494.503 + 6.432*totalTime + 4.282*heartRateQ99 + sportOffset
+            let sportOffset = 0;
+            if (sport === 'strength') sportOffset = -25;
+            else if (sport === 'running') sportOffset = +65;
+            else if (sport === 'cycling') sportOffset = +30;
+            else if (sport === 'walking') sportOffset = -15;
+            else if (sport === 'circuit') sportOffset = +40;
+
+            let mixedPred = -494.503 + (6.432 * duration) + (4.282 * hr) + sportOffset;
+            mixedPred = Math.max(50, Math.round(mixedPred));
+
+            // Standard OLS baseline (without random sport intercept)
+            let olsPred = Math.round(-460 + (6.2 * duration) + (4.1 * hr));
+
+            const rate = (mixedPred / duration).toFixed(1);
+            const low = Math.max(30, Math.round(mixedPred - 61.2));
+            const high = Math.round(mixedPred + 61.2);
+
+            document.getElementById('cal-total').innerText = mixedPred.toLocaleString();
+            document.getElementById('cal-rate').innerText = `${rate} kcal/min`;
+            document.getElementById('cal-low').innerText = `${low} kcal`;
+            document.getElementById('cal-high').innerText = `${high} kcal`;
+            document.getElementById('comp-mixed').innerText = `${mixedPred} kcal (RMSE: 61.2)`;
+            document.getElementById('comp-ols').innerText = `${olsPred} kcal (RMSE: 79.4)`;
+
+            // Insights
+            let insight = '';
+            if (sport === 'strength') {
+                insight = `Strength session: Intermittent sets yield peak cardiovascular surges (HR Q99: ${hr} bpm); the model applies a resting metabolic adjustment factor.`;
+            } else if (sport === 'running') {
+                insight = `Aerobic running: Steady sustained cardiac output at ${hr} bpm drives elevated rate of ${rate} kcal/min. High recovery glycogen refill recommended.`;
+            } else {
+                insight = `Continuous discipline: ${duration} minutes at ${hr} bpm yields stable metabolic demand with standard linear slope scaling.`;
+            }
+            document.getElementById('bio-insight').innerText = insight;
+        }
+
+        function resetBiometrics() {
+            document.getElementById('bio-sport').value = 'strength';
+            document.getElementById('bio-duration').value = 60;
+            document.getElementById('duration-display').innerText = 60;
+            document.getElementById('bio-hr').value = 145;
+            document.getElementById('hr-display').innerText = 145;
+            calculateCalories();
+        }
+        calculateCalories();
+
+        // Chart 1: Hours
+        const ctxHour = document.getElementById('hourChart').getContext('2d');
+        new Chart(ctxHour, {
+            type: 'bar',
+            data: {
+                labels: ['6h', '8h', '10h', '12h', '13h', '14h', '15h', '16h', '18h', '20h'],
+                datasets: [{
+                    label: 'Workouts Completed',
+                    data: [12, 18, 32, 65, 54, 42, 28, 16, 11, 5],
+                    backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                    borderColor: 'rgb(16, 185, 129)',
+                    borderWidth: 1,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Days
+        const ctxDay = document.getElementById('dayChart').getContext('2d');
+        new Chart(ctxDay, {
+            type: 'radar',
+            data: {
+                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                datasets: [{
+                    label: 'Workouts per Day',
+                    data: [42, 38, 48, 41, 45, 36, 33],
+                    backgroundColor: 'rgba(6, 182, 212, 0.25)',
+                    borderColor: 'rgb(6, 182, 212)',
+                    pointBackgroundColor: 'rgb(6, 182, 212)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(6, 182, 212)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    r: {
+                        grid: { color: 'rgba(255, 255, 255, 0.08)' },
+                        pointLabels: { color: '#cbd5e1', font: { size: 11 } },
+                        ticks: { color: '#94a3b8', backdropColor: 'transparent' }
+                    }
+                }
+            }
+        });
+
+        // Lightbox
+        function openLightbox(src, caption) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox-caption').innerText = caption;
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.add('hidden');
+        }
+
+        // Theme Toggle
+        const themeBtn = document.getElementById('theme-toggle');
+        themeBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-icon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

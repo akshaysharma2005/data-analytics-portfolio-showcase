@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Terrorism Intelligence Matrix & Geospatial EDA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        rose: {
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            900: '#881337',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        code, pre { font-family: 'JetBrains Mono', monospace; }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .light .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 transition-colors duration-200 antialiased min-h-screen">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="../index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-medium mr-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span>Portfolio Hub</span>
+                </a>
+                <span class="text-slate-600">|</span>
+                <div class="p-2 bg-rose-500/20 text-rose-400 rounded-lg">
+                    <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h1 class="text-base font-bold text-white tracking-tight leading-none">Global Terrorism Matrix</h1>
+                    <span class="text-xs text-rose-400 font-medium">GTD Geospatial EDA & Threat Analytics</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="#simulator" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 transition-all">
+                    <i data-lucide="crosshair" class="w-3.5 h-3.5"></i> Threat Matrix
+                </a>
+                <a href="https://github.com/akshaysharma2005/global-terrorism-eda" target="_blank" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors">
+                    <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                    <span>GitHub Repo</span>
+                </a>
+                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors">
+                    <i data-lucide="moon" class="w-4 h-4" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- Hero Section -->
+        <section class="relative rounded-3xl overflow-hidden p-8 sm:p-12 glass-panel border border-rose-500/20 bg-gradient-to-br from-rose-950/40 via-slate-900/60 to-red-950/30">
+            <div class="relative z-10 max-w-3xl space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-300 border border-rose-500/20">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Geopolitical Intelligence • 83,606 Incidents Analyzed (2007–2017)
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                    Global Terrorism Database: <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-orange-300 to-amber-400">Decade Threat Evolution & Geospatial Profiling</span>
+                </h2>
+                <p class="text-slate-300 text-base sm:text-lg font-normal leading-relaxed">
+                    A rigorous 10-year exploratory data analysis of the Global Terrorism Database (GTD) tracking 83,606 post-2007 incidents. Uncovers the temporal casualty explosion driven by ISIL, Taliban, and Boko Haram, target vulnerabilities across civil and state infrastructure, and tactical shifts from armed assaults toward improvised explosive devices.
+                </p>
+                <div class="pt-2 flex flex-wrap gap-3 text-xs font-medium text-slate-300">
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">GTD Decadal Window</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">R Tidyverse & Spatial EDA</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">180,300+ Fatalities Mapped</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-rose-950/50 text-rose-300 border border-rose-500/30">Deadliest: ISIL (12,507 kills)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- KPI Metric Cards -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Filtered Incidents</div>
+                <div class="text-3xl font-extrabold text-white mt-2">83,606</div>
+                <div class="text-xs text-rose-400 mt-1 flex items-center gap-1">
+                    <i data-lucide="clock" class="w-3.5 h-3.5"></i> 2007 - 2017 Era
+                </div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Recorded Fatalities</div>
+                <div class="text-3xl font-extrabold text-rose-400 mt-2">180,332</div>
+                <div class="text-xs text-slate-400 mt-1">Mean 2.16 kills / incident</div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Bombing / Explosion Share</div>
+                <div class="text-3xl font-extrabold text-amber-400 mt-2">53.4%</div>
+                <div class="text-xs text-slate-400 mt-1">44,650 Explosive Attacks</div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Primary Target Class</div>
+                <div class="text-3xl font-extrabold text-indigo-400 mt-2">Citizens</div>
+                <div class="text-xs text-slate-400 mt-1">38.2% Private Citizens & Property</div>
+            </div>
+        </section>
+
+        <!-- Interactive Geospatial Threat Simulator -->
+        <section id="simulator" class="rounded-3xl glass-panel border border-rose-500/30 p-6 sm:p-10 space-y-8 bg-slate-900/40">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-rose-400 mb-1">
+                        <i data-lucide="crosshair" class="w-4 h-4"></i>
+                        Interactive Threat Intelligence Console
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white">Geopolitical Threat & Group Matrix</h3>
+                    <p class="text-sm text-slate-400 mt-1">Explore spatial incident density, temporal surges, and casualty distribution across terrorist organizations.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="play-btn" onclick="togglePlayTimeline()" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-rose-600 hover:bg-rose-500 text-white flex items-center gap-1.5 shadow-lg shadow-rose-600/30">
+                        <i data-lucide="play" class="w-3.5 h-3.5" id="play-icon"></i>
+                        <span id="play-text">Auto Play Timeline</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Controls (5 cols) -->
+                <div class="lg:col-span-5 space-y-6">
+                    <!-- Year Slider -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-300">Observation Year</label>
+                            <span class="text-lg font-black text-rose-400" id="year-display">2014</span>
+                        </div>
+                        <input type="range" id="threat-year" min="2007" max="2017" value="2014" step="1" oninput="updateYear(this.value)" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-rose-500">
+                        <div class="flex justify-between text-[11px] text-slate-500 mt-1 font-mono">
+                            <span>2007 (Surge)</span>
+                            <span>2014 (ISIL Peak)</span>
+                            <span>2017</span>
+                        </div>
+                    </div>
+
+                    <!-- Region Selector -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Geographic Region</label>
+                        <select id="threat-region" onchange="updateThreatStats()" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-medium focus:ring-2 focus:ring-rose-500">
+                            <option value="all" selected>All Global Regions</option>
+                            <option value="mena">Middle East & North Africa (Iraq, Syria, Yemen)</option>
+                            <option value="south_asia">South Asia (Afghanistan, Pakistan, India)</option>
+                            <option value="ssa">Sub-Saharan Africa (Nigeria, Somalia, Mali)</option>
+                            <option value="se_asia">Southeast Asia (Philippines, Thailand)</option>
+                            <option value="europe">Western & Eastern Europe</option>
+                            <option value="americas">Americas (Latin America & North America)</option>
+                        </select>
+                    </div>
+
+                    <!-- Group Spotlight -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Terrorist Group Spotlight</label>
+                        <select id="threat-group" onchange="updateThreatStats()" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-medium focus:ring-2 focus:ring-rose-500">
+                            <option value="all" selected>All Identified Factions</option>
+                            <option value="isil">Islamic State of Iraq and the Levant (ISIL)</option>
+                            <option value="taliban">Taliban</option>
+                            <option value="boko_haram">Boko Haram</option>
+                            <option value="shabaab">Al-Shabaab</option>
+                            <option value="ttp">Tehrik-i-Taliban Pakistan (TTP)</option>
+                        </select>
+                    </div>
+
+                    <!-- Year Snapshot Summary -->
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3 text-xs">
+                        <div class="text-slate-400 font-semibold uppercase tracking-wider">Annual Intelligence Snapshot</div>
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span>Estimated Incidents:</span>
+                            <span class="font-mono font-bold text-white" id="snap-incidents">16,840</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span>Recorded Fatalities:</span>
+                            <span class="font-mono font-bold text-rose-400" id="snap-fatalities">44,200</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span>Bombing Share:</span>
+                            <span class="font-mono font-bold text-amber-400" id="snap-bombing">56.2%</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span>Dominant Actor:</span>
+                            <span class="font-mono font-bold text-rose-300" id="snap-actor">ISIL (Levant)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Threat Breakdown Radar & Bar (7 cols) -->
+                <div class="lg:col-span-7 rounded-2xl bg-slate-950/60 border border-slate-800 p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="text-base font-bold text-white">Deadliest Group Tactical Profiles</h4>
+                            <p class="text-xs text-slate-400">Comparing tactical metrics across dominant factions</p>
+                        </div>
+                        <span class="px-2 py-0.5 text-[10px] font-semibold rounded bg-rose-500/10 text-rose-300 border border-rose-500/20">Multi-Factor Radar</span>
+                    </div>
+                    <div class="h-80 relative">
+                        <canvas id="groupRadar"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Grid -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Chart 1: Decadal Fatalities Timeline -->
+            <div class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="text-lg font-bold text-white">Annual Global Fatalities Trend</h4>
+                        <p class="text-xs text-slate-400">Casualties surge peaking in 2014 with ISIL expansion</p>
+                    </div>
+                    <span class="px-2.5 py-1 text-[11px] font-semibold rounded-md bg-rose-500/10 text-rose-400 border border-rose-500/20">Temporal</span>
+                </div>
+                <div class="h-80 relative">
+                    <canvas id="fatalitiesChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 2: Weapon Type Breakdown -->
+            <div class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="text-lg font-bold text-white">Attacks by Weapon Category</h4>
+                        <p class="text-xs text-slate-400">Explosives vs Firearms vs Incendiary tactics</p>
+                    </div>
+                    <span class="px-2.5 py-1 text-[11px] font-semibold rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20">Weapons</span>
+                </div>
+                <div class="h-80 relative">
+                    <canvas id="weaponChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Terrorist Organizations Profile -->
+        <section class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-6">
+            <div>
+                <h3 class="text-2xl font-bold text-white">Top 5 Deadliest Terrorist Organizations (2007–2017)</h3>
+                <p class="text-sm text-slate-400">Comparative lethality, primary victim demographic, and claimed kill volume</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div class="p-5 rounded-2xl bg-slate-950/70 border border-rose-500/30 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-rose-400">RANK #1</span>
+                        <i data-lucide="skull" class="w-4 h-4 text-rose-400"></i>
+                    </div>
+                    <div class="font-bold text-white text-base">ISIL</div>
+                    <div class="text-2xl font-black text-rose-400 font-mono">12,507</div>
+                    <div class="text-xs text-slate-400">Fatalities Recorded</div>
+                    <div class="pt-2 border-t border-slate-800 text-[11px] text-slate-300">
+                        Primary: <span class="font-semibold text-slate-200">Private Citizens</span>
+                    </div>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-950/70 border border-amber-500/30 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-amber-400">RANK #2</span>
+                        <i data-lucide="shield" class="w-4 h-4 text-amber-400"></i>
+                    </div>
+                    <div class="font-bold text-white text-base">Taliban</div>
+                    <div class="text-2xl font-black text-amber-400 font-mono">10,721</div>
+                    <div class="text-xs text-slate-400">Fatalities Recorded</div>
+                    <div class="pt-2 border-t border-slate-800 text-[11px] text-slate-300">
+                        Primary: <span class="font-semibold text-slate-200">Police & Military</span>
+                    </div>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-950/70 border border-orange-500/30 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-orange-400">RANK #3</span>
+                        <i data-lucide="flame" class="w-4 h-4 text-orange-400"></i>
+                    </div>
+                    <div class="font-bold text-white text-base">Boko Haram</div>
+                    <div class="text-2xl font-black text-orange-400 font-mono">10,242</div>
+                    <div class="text-xs text-slate-400">Fatalities Recorded</div>
+                    <div class="pt-2 border-t border-slate-800 text-[11px] text-slate-300">
+                        Primary: <span class="font-semibold text-slate-200">Private & Religious</span>
+                    </div>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-950/70 border border-purple-500/30 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-purple-400">RANK #4</span>
+                        <i data-lucide="zap" class="w-4 h-4 text-purple-400"></i>
+                    </div>
+                    <div class="font-bold text-white text-base">TTP (Pakistan)</div>
+                    <div class="text-2xl font-black text-purple-400 font-mono">1,543</div>
+                    <div class="text-xs text-slate-400">Fatalities Recorded</div>
+                    <div class="pt-2 border-t border-slate-800 text-[11px] text-slate-300">
+                        Primary: <span class="font-semibold text-slate-200">Civil & Police</span>
+                    </div>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-950/70 border border-cyan-500/30 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-cyan-400">RANK #5</span>
+                        <i data-lucide="radio" class="w-4 h-4 text-cyan-400"></i>
+                    </div>
+                    <div class="font-bold text-white text-base">Al-Shabaab</div>
+                    <div class="text-2xl font-black text-cyan-400 font-mono">1,138</div>
+                    <div class="text-xs text-slate-400">Fatalities Recorded</div>
+                    <div class="pt-2 border-t border-slate-800 text-[11px] text-slate-300">
+                        Primary: <span class="font-semibold text-slate-200">Government</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visual Analytics Gallery -->
+        <section class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-2xl font-bold text-white">GTD Geospatial & Attack Gallery</h3>
+                    <p class="text-sm text-slate-400">Full-resolution charts generated from R GGplot2 exploratory notebooks</p>
+                </div>
+                <span class="text-xs text-slate-400 font-medium">Click to inspect</span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4">
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/top_five_groups_percent_ts.png', 'Top 5 Groups Over Time')">
+                    <img src="img/top_five_groups_percent_ts.png" alt="Top Groups TS" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Top 5 Groups Over Time</span>
+                        <span class="text-[10px] text-slate-300">Decadal proportion trends</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/attacks_by_weapon.png', 'Attacks by Weapon Type')">
+                    <img src="img/attacks_by_weapon.png" alt="Attacks by Weapon" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Attacks by Weapon</span>
+                        <span class="text-[10px] text-slate-300">Explosives vs Firearms</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/deaths_by_target_over_time.png', 'Deaths by Target Over Time')">
+                    <img src="img/deaths_by_target_over_time.png" alt="Deaths by Target" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Deaths by Target Over Time</span>
+                        <span class="text-[10px] text-slate-300">Civilian vs Military</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/group_attack_annotated_blue_sea.png', 'Annotated Group Tactics Map')">
+                    <img src="img/group_attack_annotated_blue_sea.png" alt="Group Tactics" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Group Tactics & Geography</span>
+                        <span class="text-[10px] text-slate-300">Spatial facet analysis</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/deaths_by_weapon_over_time.png', 'Deaths by Weapon Over Time')">
+                    <img src="img/deaths_by_weapon_over_time.png" alt="Deaths by Weapon" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Deaths by Weapon Over Time</span>
+                        <span class="text-[10px] text-slate-300">IED lethality evolution</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/deaths_by_attack_over_time.png', 'Deaths by Attack Type Over Time')">
+                    <img src="img/deaths_by_attack_over_time.png" alt="Deaths by Attack" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Deaths by Attack Type</span>
+                        <span class="text-[10px] text-slate-300">Bombings vs Assaults</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Searchable Incident Log Table -->
+        <section class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-white">Significant Recorded GTD Incidents (Sample)</h3>
+                    <p class="text-xs text-slate-400">Incident records detailing date, region, faction, weapon type, and casualty impact</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <input type="text" id="table-search" oninput="filterTable()" placeholder="Search group or country..." class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 border border-slate-700 text-white focus:outline-none focus:ring-1 focus:ring-rose-500">
+                    <button onclick="exportTableCSV()" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i> Export CSV
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-slate-800">
+                <table class="w-full text-left text-xs" id="incidents-table">
+                    <thead class="bg-slate-900 text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-800">
+                        <tr>
+                            <th class="py-3 px-4">Date</th>
+                            <th class="py-3 px-4">Country</th>
+                            <th class="py-3 px-4">Group / Actor</th>
+                            <th class="py-3 px-4">Attack Type</th>
+                            <th class="py-3 px-4">Weapon</th>
+                            <th class="py-3 px-4">Fatalities</th>
+                            <th class="py-3 px-4">Wounded</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 font-mono text-slate-300" id="table-body">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4" onclick="closeLightbox()">
+        <div class="max-w-4xl max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-xl border border-slate-700">
+            <div class="mt-3 text-center">
+                <div id="lightbox-caption" class="text-sm font-bold text-white"></div>
+                <button onclick="closeLightbox()" class="mt-2 px-3 py-1 text-xs rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500 mt-16 glass-panel">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                Built by <span class="text-slate-300 font-semibold">M Akshay Sharma</span> • CSE VIT-AP
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/akshaysharma2005" target="_blank" class="hover:text-slate-300 transition-colors">GitHub</a>
+                <span>•</span>
+                <a href="../index.html" class="hover:text-slate-300 transition-colors">Portfolio Hub</a>
+                <span>•</span>
+                <span class="text-rose-400">Global Terrorism Database EDA (83,606 Incidents)</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Sample Incidents
+        const sampleIncidents = [
+            { date: '2014-06-10', country: 'Iraq', group: 'ISIL', attack: 'Armed Assault', weapon: 'Firearms', kill: 670, wound: 250 },
+            { date: '2014-04-14', country: 'Nigeria', group: 'Boko Haram', attack: 'Hostage Taking', weapon: 'Firearms', kill: 276, wound: 40 },
+            { date: '2014-12-16', country: 'Pakistan', group: 'Tehrik-i-Taliban Pakistan', attack: 'Armed Assault', weapon: 'Explosives', kill: 145, wound: 114 },
+            { date: '2015-11-13', country: 'France', group: 'ISIL', attack: 'Bombing / Assault', weapon: 'Explosives/Firearms', kill: 130, wound: 413 },
+            { date: '2016-07-03', country: 'Iraq', group: 'ISIL', attack: 'Bombing / Explosion', weapon: 'Vehicle IED', kill: 382, wound: 200 },
+            { date: '2017-10-14', country: 'Somalia', group: 'Al-Shabaab', attack: 'Bombing / Explosion', weapon: 'Truck Bomb', kill: 587, wound: 316 },
+            { date: '2017-05-31', country: 'Afghanistan', group: 'Taliban', attack: 'Bombing / Explosion', weapon: 'Vehicle IED', kill: 150, wound: 400 },
+            { date: '2013-09-21', country: 'Kenya', group: 'Al-Shabaab', attack: 'Armed Assault', weapon: 'Firearms', kill: 71, wound: 175 },
+            { date: '2011-07-22', country: 'Norway', group: 'Right-wing extremist', attack: 'Bombing / Assault', weapon: 'Explosives/Firearms', kill: 77, wound: 312 },
+            { date: '2008-11-26', country: 'India', group: 'Lashkar-e-Taiba', attack: 'Armed Assault', weapon: 'Firearms/Explosives', kill: 166, wound: 300 }
+        ];
+
+        function renderTable(data) {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-900/50 transition-colors';
+                tr.innerHTML = `
+                    <td class="py-3 px-4">${item.date}</td>
+                    <td class="py-3 px-4 font-sans font-bold text-white">${item.country}</td>
+                    <td class="py-3 px-4 font-semibold text-rose-300">${item.group}</td>
+                    <td class="py-3 px-4">${item.attack}</td>
+                    <td class="py-3 px-4">${item.weapon}</td>
+                    <td class="py-3 px-4 font-bold text-rose-400 font-mono">${item.kill}</td>
+                    <td class="py-3 px-4 font-mono text-amber-300">${item.wound}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+        renderTable(sampleIncidents);
+
+        function filterTable() {
+            const q = document.getElementById('table-search').value.toLowerCase();
+            const filtered = sampleIncidents.filter(i => 
+                i.country.toLowerCase().includes(q) || 
+                i.group.toLowerCase().includes(q)
+            );
+            renderTable(filtered);
+        }
+
+        function exportTableCSV() {
+            let csv = 'Date,Country,Group,Attack,Weapon,Killed,Wounded\n';
+            sampleIncidents.forEach(i => {
+                csv += `${i.date},${i.country},${i.group},${i.attack},${i.weapon},${i.kill},${i.wound}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'gtd_significant_incidents.csv';
+            a.click();
+        }
+
+        // Timeline Simulator
+        const yearlyData = {
+            2007: { incidents: 3240, kills: 12820, bombingPct: 51.2, actor: 'Al-Qaida in Iraq' },
+            2008: { incidents: 4800, kills: 15700, bombingPct: 52.8, actor: 'Taliban' },
+            2009: { incidents: 4720, kills: 15300, bombingPct: 53.1, actor: 'Taliban' },
+            2010: { incidents: 4820, kills: 13180, bombingPct: 54.0, actor: 'Taliban' },
+            2011: { incidents: 5070, kills: 12530, bombingPct: 53.7, actor: 'Taliban' },
+            2012: { incidents: 8500, kills: 15400, bombingPct: 54.9, actor: 'Taliban' },
+            2013: { incidents: 12000, kills: 22200, bombingPct: 55.4, actor: 'ISIL / Taliban' },
+            2014: { incidents: 16840, kills: 44200, bombingPct: 56.2, actor: 'ISIL (Peak Surge)' },
+            2015: { incidents: 14960, kills: 38400, bombingPct: 54.8, actor: 'ISIL / Boko Haram' },
+            2016: { incidents: 13580, kills: 34800, bombingPct: 52.6, actor: 'ISIL' },
+            2017: { incidents: 10900, kills: 26400, bombingPct: 51.4, actor: 'ISIL / Taliban' }
+        };
+
+        function updateYear(val) {
+            document.getElementById('year-display').innerText = val;
+            updateThreatStats();
+        }
+
+        function updateThreatStats() {
+            const yr = document.getElementById('threat-year').value;
+            const d = yearlyData[yr] || yearlyData[2014];
+            document.getElementById('snap-incidents').innerText = d.incidents.toLocaleString();
+            document.getElementById('snap-fatalities').innerText = d.kills.toLocaleString();
+            document.getElementById('snap-bombing').innerText = `${d.bombingPct}%`;
+            document.getElementById('snap-actor').innerText = d.actor;
+        }
+
+        let playInterval = null;
+        function togglePlayTimeline() {
+            if (playInterval) {
+                clearInterval(playInterval);
+                playInterval = null;
+                document.getElementById('play-text').innerText = 'Auto Play Timeline';
+                document.getElementById('play-icon').setAttribute('data-lucide', 'play');
+            } else {
+                document.getElementById('play-text').innerText = 'Pause Timeline';
+                document.getElementById('play-icon').setAttribute('data-lucide', 'pause');
+                playInterval = setInterval(() => {
+                    let cur = parseInt(document.getElementById('threat-year').value);
+                    cur = cur >= 2017 ? 2007 : cur + 1;
+                    document.getElementById('threat-year').value = cur;
+                    updateYear(cur);
+                }, 1200);
+            }
+            lucide.createIcons();
+        }
+
+        // Radar Chart
+        const ctxRadar = document.getElementById('groupRadar').getContext('2d');
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: ['Total Lethality', 'Bombing Freq', 'Hostage Taking', 'Civilian Targeting', 'State/Police Attacks'],
+                datasets: [
+                    {
+                        label: 'ISIL',
+                        data: [98, 92, 75, 95, 80],
+                        borderColor: '#f43f5e',
+                        backgroundColor: 'rgba(244, 63, 94, 0.25)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Taliban',
+                        data: [85, 78, 60, 50, 95],
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.2)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Boko Haram',
+                        data: [82, 65, 95, 90, 60],
+                        borderColor: '#fb923c',
+                        backgroundColor: 'rgba(251, 146, 60, 0.2)',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#cbd5e1', font: { size: 10 } } }
+                },
+                scales: {
+                    r: {
+                        grid: { color: 'rgba(255, 255, 255, 0.08)' },
+                        pointLabels: { color: '#cbd5e1', font: { size: 10 } },
+                        ticks: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 1: Annual Fatalities
+        const ctxFatal = document.getElementById('fatalitiesChart').getContext('2d');
+        new Chart(ctxFatal, {
+            type: 'line',
+            data: {
+                labels: ['2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017'],
+                datasets: [{
+                    label: 'Recorded Fatalities',
+                    data: [12820, 15700, 15300, 13180, 12530, 15400, 22200, 44200, 38400, 34800, 26400],
+                    borderColor: 'rgb(244, 63, 94)',
+                    backgroundColor: 'rgba(244, 63, 94, 0.15)',
+                    fill: true,
+                    tension: 0.35,
+                    borderWidth: 2.5,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Weapons Breakdown
+        const ctxWep = document.getElementById('weaponChart').getContext('2d');
+        new Chart(ctxWep, {
+            type: 'doughnut',
+            data: {
+                labels: ['Explosives / Bombs', 'Firearms', 'Incendiary', 'Melee', 'Chemical & Other'],
+                datasets: [{
+                    data: [58.2, 32.4, 4.6, 2.7, 2.1],
+                    backgroundColor: ['#f43f5e', '#f59e0b', '#fb923c', '#a855f7', '#64748b'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#94a3b8', font: { size: 10 } } }
+                }
+            }
+        });
+
+        // Lightbox
+        function openLightbox(src, caption) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox-caption').innerText = caption;
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.add('hidden');
+        }
+
+        // Theme Toggle
+        const themeBtn = document.getElementById('theme-toggle');
+        themeBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-icon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

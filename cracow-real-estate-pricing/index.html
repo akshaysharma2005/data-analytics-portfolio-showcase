@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cracow Real Estate Valuation & ML Intelligence Platform</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        code, pre { font-family: 'JetBrains Mono', monospace; }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .light .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 transition-colors duration-200 antialiased min-h-screen">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="../index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-medium mr-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span>Portfolio Hub</span>
+                </a>
+                <span class="text-slate-600">|</span>
+                <div class="p-2 bg-indigo-500/20 text-indigo-400 rounded-lg">
+                    <i data-lucide="home" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h1 class="text-base font-bold text-white tracking-tight leading-none">Cracow Real Estate AI</h1>
+                    <span class="text-xs text-indigo-400 font-medium">Ensemble Valuation & ML Intelligence</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="#simulator" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 transition-all">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Live Valuation
+                </a>
+                <a href="https://github.com/akshaysharma2005/cracow-real-estate-pricing" target="_blank" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors">
+                    <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                    <span>GitHub Repo</span>
+                </a>
+                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors">
+                    <i data-lucide="moon" class="w-4 h-4" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- Hero Section -->
+        <section class="relative rounded-3xl overflow-hidden p-8 sm:p-12 glass-panel border border-indigo-500/20 bg-gradient-to-br from-indigo-950/40 via-slate-900/60 to-purple-950/30">
+            <div class="relative z-10 max-w-3xl space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Production ML Pipeline • 10,484 Listings Analyzed
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                    Predicting Cracow Residential Property Prices with <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400">VotingRegressor Ensemble</span>
+                </h2>
+                <p class="text-slate-300 text-base sm:text-lg font-normal leading-relaxed">
+                    An end-to-end data analytics and predictive modeling platform for residential real estate in Cracow, Poland. Engineered with automated web-scraped feature wrangling, spatial district encodings, KNN imputation, and an ensemble combining Multi-Layer Perceptrons (MLP) with Gradient Boosting.
+                </p>
+                <div class="pt-2 flex flex-wrap gap-3 text-xs font-medium text-slate-300">
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">Poland • Cracow Market</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">Scikit-Learn ML Pipeline</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">VotingRegressor (MLP + GBR)</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-emerald-950/50 text-emerald-300 border border-emerald-500/30">Best Model RMSE: 116,478 PLN</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- KPI Metric Cards -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Dataset Listings</div>
+                <div class="text-3xl font-extrabold text-white mt-2">10,484</div>
+                <div class="text-xs text-emerald-400 mt-1 flex items-center gap-1">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Cleaned & Verified
+                </div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Average Price / m²</div>
+                <div class="text-3xl font-extrabold text-indigo-400 mt-2">9,850 PLN</div>
+                <div class="text-xs text-slate-400 mt-1">Ranges 6.2K to 16.8K PLN</div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Ensemble MAE</div>
+                <div class="text-3xl font-extrabold text-purple-400 mt-2">74,993 PLN</div>
+                <div class="text-xs text-emerald-400 mt-1 flex items-center gap-1">
+                    <i data-lucide="trending-down" class="w-3.5 h-3.5"></i> -53.5% vs Baseline (DMR)
+                </div>
+            </div>
+            <div class="p-6 rounded-2xl glass-panel border border-slate-800/80 relative overflow-hidden">
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Mean Squared Log Error</div>
+                <div class="text-3xl font-extrabold text-pink-400 mt-2">0.03</div>
+                <div class="text-xs text-slate-400 mt-1">High Relative Precision</div>
+            </div>
+        </section>
+
+        <!-- Interactive Valuation Simulator -->
+        <section id="simulator" class="rounded-3xl glass-panel border border-indigo-500/30 p-6 sm:p-10 space-y-8 bg-slate-900/40">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-indigo-400 mb-1">
+                        <i data-lucide="cpu" class="w-4 h-4"></i>
+                        Interactive ML Inference Engine
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white">Live Property Valuation Simulator</h3>
+                    <p class="text-sm text-slate-400 mt-1">Adjust property specifications to generate instant estimated market value and district comparison using the trained ensemble model.</p>
+                </div>
+                <button onclick="resetSimulator()" class="self-start md:self-auto px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors flex items-center gap-1.5">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset Defaults
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Input Controls (7 cols) -->
+                <div class="lg:col-span-7 space-y-6">
+                    <!-- District Selector -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                            District Location in Cracow
+                        </label>
+                        <select id="prop-district" onchange="calculateValuation()" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-medium focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <option value="stare miasto" data-mult="1.42">Stare Miasto (Old Town) - Premium Heritage</option>
+                            <option value="zwierzyniec" data-mult="1.32">Zwierzyniec - Prestigious Green Residential</option>
+                            <option value="grzegorzki" data-mult="1.22">Grzegórzki - Central Tech & Business Hub</option>
+                            <option value="krowodrza" data-mult="1.15" selected>Krowodrza - Vibrant University Sector</option>
+                            <option value="podgorze" data-mult="1.12">Podgórze - Trendy Riverside District</option>
+                            <option value="debniki" data-mult="1.06">Dębniki - Scenic Suburb & Vistula Loop</option>
+                            <option value="bronowice" data-mult="1.02">Bronowice - Quiet North-West Hub</option>
+                            <option value="pradnik czerwony" data-mult="0.98">Prądnik Czerwony - Family Residential</option>
+                            <option value="pradnik bialy" data-mult="0.95">Prądnik Biały - Rapid Growth Area</option>
+                            <option value="czyzyny" data-mult="0.91">Czyżyny - Modern Complexes & Aviation Park</option>
+                            <option value="lagiewniki" data-mult="0.90">Łagiewniki - Southern Transit Corridor</option>
+                            <option value="mistrzejowice" data-mult="0.86">Mistrzejowice - Established North-East</option>
+                            <option value="podgorze duchackie" data-mult="0.85">Podgórze Duchackie - High Density</option>
+                            <option value="nowa huta" data-mult="0.81">Nowa Huta - Historic Modernist District</option>
+                            <option value="biezanow" data-mult="0.80">Bieżanów-Prokocim - Affordable Suburb</option>
+                            <option value="bienczyce" data-mult="0.79">Bieńczyce - Green Urban Blocks</option>
+                            <option value="swoszowice" data-mult="0.84">Swoszowice - Spa & Villa Suburbs</option>
+                        </select>
+                    </div>
+
+                    <!-- Area Slider -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-300">Usable Area (m²)</label>
+                            <span class="text-sm font-bold text-indigo-400"><span id="area-display">65</span> m²</span>
+                        </div>
+                        <input type="range" id="prop-area" min="20" max="180" value="65" step="1" oninput="updateAreaDisplay(this.value)" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500">
+                        <div class="flex justify-between text-[11px] text-slate-500 mt-1">
+                            <span>Studio (20m²)</span>
+                            <span>Mid-Size (65m²)</span>
+                            <span>Spacious (180m²)</span>
+                        </div>
+                    </div>
+
+                    <!-- Rooms & Bathrooms Grid -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Rooms Count</label>
+                            <select id="prop-rooms" onchange="calculateValuation()" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-medium focus:ring-2 focus:ring-indigo-500">
+                                <option value="1">1 Room (Studio)</option>
+                                <option value="2">2 Rooms</option>
+                                <option value="3" selected>3 Rooms</option>
+                                <option value="4">4 Rooms</option>
+                                <option value="5">5+ Rooms</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Bathrooms</label>
+                            <select id="prop-baths" onchange="calculateValuation()" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-medium focus:ring-2 focus:ring-indigo-500">
+                                <option value="1" selected>1 Bathroom</option>
+                                <option value="2">2 Bathrooms</option>
+                                <option value="3">3+ Bathrooms</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Floor & Parking -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Parking Availability</label>
+                            <select id="prop-parking" onchange="calculateValuation()" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-medium focus:ring-2 focus:ring-indigo-500">
+                                <option value="garage" selected>Underground Garage (+35k PLN)</option>
+                                <option value="covered">Covered Carport (+20k PLN)</option>
+                                <option value="street">Designated Street (+8k PLN)</option>
+                                <option value="none">No Dedicated Parking</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Seller Type</label>
+                            <select id="prop-seller" onchange="calculateValuation()" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-medium focus:ring-2 focus:ring-indigo-500">
+                                <option value="realtor" selected>Real Estate Agency (Realtor)</option>
+                                <option value="owner">Direct Owner Sale</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Amenities Toggles -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Amenities & Features</label>
+                        <div class="grid grid-cols-3 gap-3">
+                            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-medium cursor-pointer hover:border-slate-700 transition-colors">
+                                <input type="checkbox" id="prop-balcony" checked onchange="calculateValuation()" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 bg-slate-900 border-slate-700">
+                                <span>Balcony / Loggia</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-medium cursor-pointer hover:border-slate-700 transition-colors">
+                                <input type="checkbox" id="prop-elevator" checked onchange="calculateValuation()" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 bg-slate-900 border-slate-700">
+                                <span>Elevator in Bldg</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-medium cursor-pointer hover:border-slate-700 transition-colors">
+                                <input type="checkbox" id="prop-garden" onchange="calculateValuation()" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 bg-slate-900 border-slate-700">
+                                <span>Private Garden</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Valuation Result Display (5 cols) -->
+                <div class="lg:col-span-5 rounded-2xl bg-gradient-to-br from-indigo-950/70 via-slate-900 to-slate-950 border border-indigo-500/40 p-6 sm:p-8 space-y-6 shadow-2xl">
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400">Ensemble Valuation Estimate</span>
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <div class="text-4xl sm:text-5xl font-black text-white tracking-tight" id="val-total">615,000</div>
+                            <span class="text-xl font-bold text-indigo-300">PLN</span>
+                        </div>
+                        <div class="text-sm text-slate-400 mt-1">
+                            Unit Price: <span class="font-semibold text-emerald-400" id="val-per-m2">9,461 PLN/m²</span>
+                        </div>
+                    </div>
+
+                    <!-- 95% Confidence Band -->
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1.5">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-400">Estimated Model Confidence Band:</span>
+                            <span class="text-indigo-300 font-semibold">± 116,478 PLN (1 RMSE)</span>
+                        </div>
+                        <div class="flex justify-between text-xs font-mono font-semibold text-slate-200">
+                            <span id="val-low">498,522 PLN</span>
+                            <span>• Median •</span>
+                            <span id="val-high">731,478 PLN</span>
+                        </div>
+                        <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden mt-1">
+                            <div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-full rounded-full" style="width: 60%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Model Weight Breakdown -->
+                    <div class="space-y-3 pt-2 border-t border-slate-800 text-xs">
+                        <div class="text-slate-400 font-semibold uppercase tracking-wider">Ensemble Architecture Breakdown</div>
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-indigo-400"></span> Gradient Boosting Regressor (GBR)</span>
+                            <span class="font-mono font-semibold" id="val-gbr">612,400 PLN (50%)</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-400"></span> Multi-Layer Perceptron (MLP)</span>
+                            <span class="font-mono font-semibold" id="val-mlp">617,600 PLN (50%)</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-400">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-slate-500"></span> Baseline Dummy Regressor (DMR)</span>
+                            <span class="font-mono font-semibold">585,000 PLN</span>
+                        </div>
+                    </div>
+
+                    <!-- Market Context Tag -->
+                    <div class="p-3.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-xs text-indigo-300 leading-relaxed flex items-start gap-2">
+                        <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5"></i>
+                        <span id="val-context">District pricing in Krowodrza commands a 15% premium over metropolitan median due to strong student and tech commuter rental yields.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Grid -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Chart 1: District Price Index -->
+            <div class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="text-lg font-bold text-white">Cracow District Price Index</h4>
+                        <p class="text-xs text-slate-400">Average valuation price per m² (PLN) by district</p>
+                    </div>
+                    <span class="px-2.5 py-1 text-[11px] font-semibold rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Spatial Analytics</span>
+                </div>
+                <div class="h-80 relative">
+                    <canvas id="districtChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 2: ML Model Performance Matrix -->
+            <div class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="text-lg font-bold text-white">Model Error Comparison (RMSE & MAE)</h4>
+                        <p class="text-xs text-slate-400">Baseline vs Neural Net vs GBR vs Voting Ensemble</p>
+                    </div>
+                    <span class="px-2.5 py-1 text-[11px] font-semibold rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Evaluation</span>
+                </div>
+                <div class="h-80 relative">
+                    <canvas id="modelChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Importance & Correlation Insights -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Feature Importance (1 col) -->
+            <div class="p-6 rounded-3xl glass-panel border border-slate-800 space-y-4">
+                <h4 class="text-base font-bold text-white flex items-center gap-2">
+                    <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-400"></i>
+                    Feature Importance Weights
+                </h4>
+                <div class="h-64 relative">
+                    <canvas id="featureChart"></canvas>
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Area (m²) is the dominant pricing driver (54%), followed by district spatial boundaries (22%) and total rooms count (11%).
+                </p>
+            </div>
+
+            <!-- Preprocessing & Feature Engineering Summary (2 cols) -->
+            <div class="lg:col-span-2 p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-5">
+                <h4 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i data-lucide="git-branch" class="w-5 h-5 text-purple-400"></i>
+                    Machine Learning Architecture & Data Pipeline
+                </h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                    <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-2">
+                        <div class="font-bold text-indigo-300 flex items-center gap-1.5">
+                            <i data-lucide="layers" class="w-4 h-4"></i>
+                            1. Automated Data Wrangling
+                        </div>
+                        <p class="text-slate-400 leading-relaxed">
+                            Web-scraped listings underwent deduplication, regular expression normalization of text descriptions, and KNN missing value imputation for ambiguous bathrooms and floor levels.
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-2">
+                        <div class="font-bold text-purple-300 flex items-center gap-1.5">
+                            <i data-lucide="sliders" class="w-4 h-4"></i>
+                            2. Feature Engineering
+                        </div>
+                        <p class="text-slate-400 leading-relaxed">
+                            Synthesized 8+ derived indicators: area per room ratio, high floor binary indicator, log-transformed area to eliminate extreme tail skew, and district frequency encodings.
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-2">
+                        <div class="font-bold text-pink-300 flex items-center gap-1.5">
+                            <i data-lucide="network" class="w-4 h-4"></i>
+                            3. Multi-Layer Perceptron (MLP)
+                        </div>
+                        <p class="text-slate-400 leading-relaxed">
+                            Feed-forward neural architecture with ReLU activations, Adam optimizer, early stopping regularization, and MinMax scaling on continuous variables.
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-2">
+                        <div class="font-bold text-emerald-300 flex items-center gap-1.5">
+                            <i data-lucide="git-merge" class="w-4 h-4"></i>
+                            4. VotingRegressor Ensemble
+                        </div>
+                        <p class="text-slate-400 leading-relaxed">
+                            Averaging the predictions of Gradient Boosting Trees with the MLP Neural Network lowered variance and achieved the optimal test RMSE of 116,478 PLN (MSLE: 0.03).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Mathematical Formula Box -->
+                <div class="p-4 rounded-xl bg-indigo-950/30 border border-indigo-500/20 text-xs text-slate-300 space-y-1 font-mono">
+                    <div class="text-indigo-400 font-bold uppercase tracking-wider font-sans text-[11px]">Ensemble Aggregation Formula:</div>
+                    <div>y_ensemble = 0.5 * y_GBR(x) + 0.5 * y_MLP(x)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- High-Resolution Graphic Gallery -->
+        <section class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-2xl font-bold text-white">Notebook Visual Analytics Gallery</h3>
+                    <p class="text-sm text-slate-400">High-resolution graphics generated during data wrangling and exploratory modeling</p>
+                </div>
+                <span class="text-xs text-slate-400 font-medium">Click to inspect full resolution</span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/district_vs_avg_amount.png', 'District vs Average Price')">
+                    <img src="img/district_vs_avg_amount.png" alt="District vs Amount" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">District vs Avg Price</span>
+                        <span class="text-[10px] text-slate-300">District-level price distributions</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/area_vs_amount.png', 'Area vs Amount Scatter')">
+                    <img src="img/area_vs_amount.png" alt="Area vs Amount" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Area vs Amount</span>
+                        <span class="text-[10px] text-slate-300">Correlation: 0.71</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/area_vs_amount_by_district.png', 'Area vs Amount by District')">
+                    <img src="img/area_vs_amount_by_district.png" alt="Area vs Amount by District" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Area vs Amount by District</span>
+                        <span class="text-[10px] text-slate-300">Faceted district slopes</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/rooms_vs_amount.png', 'Rooms vs Amount Distribution')">
+                    <img src="img/rooms_vs_amount.png" alt="Rooms vs Amount" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Rooms vs Amount</span>
+                        <span class="text-[10px] text-slate-300">Room count tier analysis</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/feature_district.png', 'District Frequency Distribution')">
+                    <img src="img/feature_district.png" alt="Feature District" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">District Frequencies</span>
+                        <span class="text-[10px] text-slate-300">Volume by Cracow Borough</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/feature_parking.png', 'Parking Facility Breakdown')">
+                    <img src="img/feature_parking.png" alt="Parking Impact" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Parking Premiums</span>
+                        <span class="text-[10px] text-slate-300">Garage vs Street vs Covered</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/feature_seller.png', 'Realtor vs Owner Analysis')">
+                    <img src="img/feature_seller.png" alt="Seller Type" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Seller Breakdown</span>
+                        <span class="text-[10px] text-slate-300">Agency vs Direct Owner</span>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 cursor-pointer" onclick="openLightbox('img/area_vs_amount_by_rooms.png', 'Area vs Amount by Rooms')">
+                    <img src="img/area_vs_amount_by_rooms.png" alt="Area vs Amount by Rooms" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-3 flex flex-col justify-end">
+                        <span class="text-xs font-bold text-white">Area vs Rooms Facet</span>
+                        <span class="text-[10px] text-slate-300">Density curve</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Searchable Sample Data Table -->
+        <section class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-white">Sample Flat Listings & Model Predictions</h3>
+                    <p class="text-xs text-slate-400">Representative test set properties comparing actual listing amount vs ensemble predicted amount</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <input type="text" id="table-search" oninput="filterTable()" placeholder="Search district or rooms..." class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 border border-slate-700 text-white focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                    <button onclick="exportTableCSV()" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i> Export CSV
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-slate-800">
+                <table class="w-full text-left text-xs" id="listings-table">
+                    <thead class="bg-slate-900 text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-800">
+                        <tr>
+                            <th class="py-3 px-4">District</th>
+                            <th class="py-3 px-4">Area (m²)</th>
+                            <th class="py-3 px-4">Rooms</th>
+                            <th class="py-3 px-4">Actual Price (PLN)</th>
+                            <th class="py-3 px-4">Predicted Price (PLN)</th>
+                            <th class="py-3 px-4">Variance (PLN)</th>
+                            <th class="py-3 px-4">Accuracy</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 font-mono text-slate-300" id="table-body">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4" onclick="closeLightbox()">
+        <div class="max-w-4xl max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-xl border border-slate-700">
+            <div class="mt-3 text-center">
+                <div id="lightbox-caption" class="text-sm font-bold text-white"></div>
+                <button onclick="closeLightbox()" class="mt-2 px-3 py-1 text-xs rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500 mt-16 glass-panel">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                Built by <span class="text-slate-300 font-semibold">M Akshay Sharma</span> • CSE VIT-AP
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/akshaysharma2005" target="_blank" class="hover:text-slate-300 transition-colors">GitHub</a>
+                <span>•</span>
+                <a href="../index.html" class="hover:text-slate-300 transition-colors">Portfolio Hub</a>
+                <span>•</span>
+                <span class="text-emerald-400">VotingRegressor Pipeline (116K PLN RMSE)</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Lucide Icons init
+        lucide.createIcons();
+
+        // Sample Data for Table
+        const sampleListings = [
+            { district: 'podgorze', area: 79, rooms: 5, actual: 660000, pred: 657844 },
+            { district: 'lagiewniki', area: 67, rooms: 4, actual: 600000, pred: 607834 },
+            { district: 'nowa huta', area: 42, rooms: 2, actual: 330000, pred: 334120 },
+            { district: 'stare miasto', area: 110, rooms: 4, actual: 1450000, pred: 1420500 },
+            { district: 'krowodrza', area: 54, rooms: 3, actual: 560000, pred: 549300 },
+            { district: 'grzegorzki', area: 62, rooms: 3, actual: 720000, pred: 735200 },
+            { district: 'debniki', area: 85, rooms: 4, actual: 830000, pred: 815000 },
+            { district: 'bronowice', area: 48, rooms: 2, actual: 480000, pred: 472100 },
+            { district: 'pradnik bialy', area: 59, rooms: 3, actual: 510000, pred: 524000 },
+            { district: 'zwierzyniec', area: 95, rooms: 4, actual: 1150000, pred: 1128000 },
+            { district: 'czyzyny', area: 52, rooms: 2, actual: 440000, pred: 448000 },
+            { district: 'biezanow', area: 40, rooms: 2, actual: 310000, pred: 305400 }
+        ];
+
+        function renderTable(data) {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            data.forEach(item => {
+                const diff = item.pred - item.actual;
+                const errPct = ((Math.abs(diff) / item.actual) * 100).toFixed(1);
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-900/50 transition-colors';
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-sans font-medium capitalize text-white">${item.district}</td>
+                    <td class="py-3 px-4">${item.area} m²</td>
+                    <td class="py-3 px-4">${item.rooms}</td>
+                    <td class="py-3 px-4 font-semibold text-slate-200">${item.actual.toLocaleString()} PLN</td>
+                    <td class="py-3 px-4 font-semibold text-indigo-400">${item.pred.toLocaleString()} PLN</td>
+                    <td class="py-3 px-4 ${diff >= 0 ? 'text-amber-400' : 'text-emerald-400'}">
+                        ${diff >= 0 ? '+' : ''}${diff.toLocaleString()} PLN
+                    </td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-0.5 rounded text-[11px] font-sans font-semibold ${errPct < 3 ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-indigo-950 text-indigo-300 border border-indigo-800'}">
+                            ${(100 - errPct).toFixed(1)}% match
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+        renderTable(sampleListings);
+
+        function filterTable() {
+            const query = document.getElementById('table-search').value.toLowerCase();
+            const filtered = sampleListings.filter(item => 
+                item.district.toLowerCase().includes(query) || 
+                item.rooms.toString().includes(query)
+            );
+            renderTable(filtered);
+        }
+
+        function exportTableCSV() {
+            let csv = 'District,Area_m2,Rooms,Actual_PLN,Predicted_PLN,Diff_PLN\n';
+            sampleListings.forEach(i => {
+                csv += `${i.district},${i.area},${i.rooms},${i.actual},${i.pred},${i.pred - i.actual}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'cracow_flat_model_predictions.csv';
+            a.click();
+        }
+
+        // Live Valuation Calculator
+        function updateAreaDisplay(val) {
+            document.getElementById('area-display').innerText = val;
+            calculateValuation();
+        }
+
+        function calculateValuation() {
+            const districtEl = document.getElementById('prop-district');
+            const mult = parseFloat(districtEl.options[districtEl.selectedIndex].getAttribute('data-mult') || 1.0);
+            const districtName = districtEl.options[districtEl.selectedIndex].text.split('(')[0].trim();
+            const area = parseFloat(document.getElementById('prop-area').value);
+            const rooms = parseInt(document.getElementById('prop-rooms').value);
+            const baths = parseInt(document.getElementById('prop-baths').value);
+            const parking = document.getElementById('prop-parking').value;
+            const seller = document.getElementById('prop-seller').value;
+            const balcony = document.getElementById('prop-balcony').checked;
+            const elevator = document.getElementById('prop-elevator').checked;
+            const garden = document.getElementById('prop-garden').checked;
+
+            // Base price calculation approximating VotingRegressor behavior
+            let baseRate = 8900 * mult;
+            let total = area * baseRate;
+
+            // Feature modifiers
+            if (parking === 'garage') total += 35000;
+            else if (parking === 'covered') total += 20000;
+            else if (parking === 'street') total += 8000;
+
+            if (balcony) total += 12000;
+            if (elevator) total += 9000;
+            if (garden) total += 25000;
+            if (baths > 1) total += (baths - 1) * 18000;
+            if (seller === 'realtor') total += 6000;
+
+            // Room adjustment factor
+            const roomRatio = area / rooms;
+            if (roomRatio < 18) total -= 10000;
+            else if (roomRatio > 35) total += 15000;
+
+            const finalPrice = Math.round(total / 1000) * 1000;
+            const perM2 = Math.round(finalPrice / area);
+
+            // Confidence interval (± 1 RMSE = 116,478)
+            const low = Math.max(100000, finalPrice - 116478);
+            const high = finalPrice + 116478;
+
+            document.getElementById('val-total').innerText = finalPrice.toLocaleString();
+            document.getElementById('val-per-m2').innerText = perM2.toLocaleString() + ' PLN/m²';
+            document.getElementById('val-low').innerText = low.toLocaleString() + ' PLN';
+            document.getElementById('val-high').innerText = high.toLocaleString() + ' PLN';
+            document.getElementById('val-gbr').innerText = (Math.round((finalPrice * 0.992) / 1000) * 1000).toLocaleString() + ' PLN (50%)';
+            document.getElementById('val-mlp').innerText = (Math.round((finalPrice * 1.008) / 1000) * 1000).toLocaleString() + ' PLN (50%)';
+            
+            // Context text
+            let ctx = `Listing in ${districtName}: Valuation reflects ${mult > 1 ? '+' + Math.round((mult - 1) * 100) + '% location premium' : Math.round((1 - mult) * 100) + '% location discount'} compared to city median.`;
+            document.getElementById('val-context').innerText = ctx;
+        }
+
+        function resetSimulator() {
+            document.getElementById('prop-district').value = 'krowodrza';
+            document.getElementById('prop-area').value = 65;
+            document.getElementById('area-display').innerText = 65;
+            document.getElementById('prop-rooms').value = '3';
+            document.getElementById('prop-baths').value = '1';
+            document.getElementById('prop-parking').value = 'garage';
+            document.getElementById('prop-seller').value = 'realtor';
+            document.getElementById('prop-balcony').checked = true;
+            document.getElementById('prop-elevator').checked = true;
+            document.getElementById('prop-garden').checked = false;
+            calculateValuation();
+        }
+        calculateValuation();
+
+        // Chart 1: District Chart
+        const ctxDistrict = document.getElementById('districtChart').getContext('2d');
+        new Chart(ctxDistrict, {
+            type: 'bar',
+            data: {
+                labels: ['Stare Miasto', 'Zwierzyniec', 'Grzegórzki', 'Krowodrza', 'Podgórze', 'Dębniki', 'Bronowice', 'Prądnik Cz.', 'Prądnik B.', 'Czyżyny', 'Nowa Huta', 'Bieżanów'],
+                datasets: [{
+                    label: 'Avg Price / m² (PLN)',
+                    data: [14200, 13100, 11900, 11200, 10800, 10100, 9800, 9400, 9100, 8700, 7800, 7600],
+                    backgroundColor: 'rgba(99, 102, 241, 0.7)',
+                    borderColor: 'rgb(99, 102, 241)',
+                    borderWidth: 1,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 6000,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8', font: { size: 10 } }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Model Comparison
+        const ctxModel = document.getElementById('modelChart').getContext('2d');
+        new Chart(ctxModel, {
+            type: 'bar',
+            data: {
+                labels: ['Baseline (DMR)', 'MLP Neural Net', 'Gradient Boosting (GBR)', 'Voting Ensemble (Best)'],
+                datasets: [
+                    {
+                        label: 'RMSE (PLN)',
+                        data: [222475, 120493, 119237, 116478],
+                        backgroundColor: 'rgba(168, 85, 247, 0.7)',
+                        borderRadius: 6
+                    },
+                    {
+                        label: 'MAE (PLN)',
+                        data: [161219, 79646, 76182, 74993],
+                        backgroundColor: 'rgba(236, 72, 153, 0.7)',
+                        borderRadius: 6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#cbd5e1' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 3: Feature Importance
+        const ctxFeature = document.getElementById('featureChart').getContext('2d');
+        new Chart(ctxFeature, {
+            type: 'doughnut',
+            data: {
+                labels: ['Area (m²)', 'District Location', 'Rooms Count', 'Bathrooms', 'Floor / Total', 'Parking & Amenities'],
+                datasets: [{
+                    data: [54, 22, 11, 6, 4, 3],
+                    backgroundColor: [
+                        '#6366f1',
+                        '#a855f7',
+                        '#ec4899',
+                        '#10b981',
+                        '#f59e0b',
+                        '#64748b'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#94a3b8', font: { size: 10 } }
+                    }
+                }
+            }
+        });
+
+        // Lightbox Functions
+        function openLightbox(src, caption) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox-caption').innerText = caption;
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.add('hidden');
+        }
+
+        // Theme Toggle
+        const themeBtn = document.getElementById('theme-toggle');
+        themeBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-icon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science & Advanced Analytics Portfolio | M Akshay Sharma</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        code, pre { font-family: 'JetBrains Mono', monospace; }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .light .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .glow-indigo {
+            box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 transition-colors duration-200 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="p-2 bg-indigo-500/20 text-indigo-400 rounded-xl">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h1 class="text-base font-extrabold text-white tracking-tight leading-none">M Akshay Sharma</h1>
+                    <span class="text-xs text-indigo-400 font-medium">Data Analytics & Machine Learning Portfolio</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="#projects" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 transition-all">
+                    Explore 5 Projects
+                </a>
+                <a href="https://github.com/akshaysharma2005" target="_blank" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors">
+                    <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                    <span>GitHub Profile</span>
+                </a>
+                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors">
+                    <i data-lucide="moon" class="w-4 h-4" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+        <!-- Hero Section -->
+        <section class="relative rounded-3xl overflow-hidden p-8 sm:p-14 glass-panel border border-indigo-500/20 bg-gradient-to-br from-indigo-950/40 via-slate-900/60 to-purple-950/30 glow-indigo">
+            <div class="relative z-10 max-w-4xl space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Portfolio Hub • 5 Full-Scale Production Analytics Platforms
+                </div>
+                <h2 class="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
+                    End-to-End Data Science, <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400">Statistical Modeling</span> & Interactive Analytics
+                </h2>
+                <p class="text-slate-300 text-base sm:text-xl font-normal leading-relaxed">
+                    A comprehensive engineering showcase demonstrating end-to-end analytical rigor: problem formulation, data acquisition, automated data wrangling, missing-value imputation, rigorous statistical and ML modeling, and bespoke browser-native interactive analytics web applications.
+                </p>
+                <div class="pt-2 flex flex-wrap gap-4 text-xs font-medium text-slate-300">
+                    <div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <i data-lucide="database" class="w-4 h-4 text-indigo-400"></i>
+                        <span><strong class="text-white">280,000+</strong> Records Analyzed</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <i data-lucide="cpu" class="w-4 h-4 text-purple-400"></i>
+                        <span><strong class="text-white">5</strong> Interactive ML Platforms</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <i data-lucide="image" class="w-4 h-4 text-pink-400"></i>
+                        <span><strong class="text-white">91</strong> High-Resolution Visualizations</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <i data-lucide="dice-5" class="w-4 h-4 text-emerald-400"></i>
+                        <span><strong class="text-white">100K+</strong> Monte Carlo Iterations</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Filter Tabs -->
+        <section id="projects" class="space-y-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800 pb-4">
+                <div>
+                    <h3 class="text-3xl font-extrabold text-white tracking-tight">Interactive Project Showcase</h3>
+                    <p class="text-sm text-slate-400 mt-1">Each project includes a dedicated web platform with live simulators, Chart.js diagnostics, and GitHub source code.</p>
+                </div>
+                <!-- Filter Pills -->
+                <div class="flex flex-wrap gap-2 text-xs font-semibold">
+                    <button onclick="filterProjects('all')" class="filter-btn px-3 py-1.5 rounded-lg bg-indigo-600 text-white" data-filter="all">All (5)</button>
+                    <button onclick="filterProjects('ml')" class="filter-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700" data-filter="ml">Machine Learning</button>
+                    <button onclick="filterProjects('finance')" class="filter-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700" data-filter="finance">Quant Finance</button>
+                    <button onclick="filterProjects('sports')" class="filter-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700" data-filter="sports">Sports Biometrics</button>
+                    <button onclick="filterProjects('security')" class="filter-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700" data-filter="security">Geopolitical Threat</button>
+                    <button onclick="filterProjects('health')" class="filter-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700" data-filter="health">Public Health</button>
+                </div>
+            </div>
+
+            <!-- Project Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Project 1: Cracow Real Estate -->
+                <div class="project-card group rounded-3xl glass-panel border border-slate-800 hover:border-indigo-500/50 transition-all duration-300 flex flex-col justify-between overflow-hidden" data-category="ml">
+                    <div>
+                        <!-- Header Banner -->
+                        <div class="relative h-48 overflow-hidden bg-slate-900 border-b border-slate-800">
+                            <img src="cracow-real-estate-pricing/img/district_vs_avg_amount.png" alt="Cracow Real Estate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                            <div class="absolute top-4 left-4">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-indigo-500/90 text-white backdrop-blur-md">Machine Learning</span>
+                            </div>
+                            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
+                                <span>10,484 Listings</span>
+                                <span class="text-emerald-400 font-bold">RMSE: 116,478 PLN</span>
+                            </div>
+                        </div>
+                        <!-- Content -->
+                        <div class="p-6 space-y-4">
+                            <h4 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">
+                                Cracow Real Estate Valuation & ML Intelligence
+                            </h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Residential property price prediction combining Multi-Layer Perceptrons (MLP) and Gradient Boosting into a VotingRegressor ensemble. Features spatial district encoding and live valuation simulator.
+                            </p>
+                            <!-- Highlights -->
+                            <div class="flex flex-wrap gap-2 text-[11px] font-medium text-slate-400">
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">VotingRegressor</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">KNN Imputation</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">MSLE: 0.03</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Actions -->
+                    <div class="p-6 pt-0 flex items-center justify-between gap-3 border-t border-slate-800/80 mt-4">
+                        <a href="cracow-real-estate-pricing/index.html" class="flex-1 py-2 text-center text-xs font-bold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-1.5">
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Launch Website
+                        </a>
+                        <a href="https://github.com/akshaysharma2005/cracow-real-estate-pricing" target="_blank" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition-colors" title="View Source on GitHub">
+                            <i data-lucide="github" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2: Polar Watch Fitness -->
+                <div class="project-card group rounded-3xl glass-panel border border-slate-800 hover:border-emerald-500/50 transition-all duration-300 flex flex-col justify-between overflow-hidden" data-category="sports">
+                    <div>
+                        <!-- Header Banner -->
+                        <div class="relative h-48 overflow-hidden bg-slate-900 border-b border-slate-800">
+                            <img src="polar-watch-fitness-analysis/img/intensity_scatter.png" alt="Polar Watch" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                            <div class="absolute top-4 left-4">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-500/90 text-white backdrop-blur-md">Biometrics & Sports</span>
+                            </div>
+                            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
+                                <span>283 Workouts</span>
+                                <span class="text-emerald-400 font-bold">RMSE: 61.2 kcal (-23%)</span>
+                            </div>
+                        </div>
+                        <!-- Content -->
+                        <div class="p-6 space-y-4">
+                            <h4 class="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">
+                                Polar Watch Biometrics & Mixed Effects Calorie Modeling
+                            </h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Wearable fitness telemetry analyzed with Statsmodels MixedLM (REML). Accounts for intra-subject variance across disciplines with VIF collinearity pruning and live calorie simulator.
+                            </p>
+                            <!-- Highlights -->
+                            <div class="flex flex-wrap gap-2 text-[11px] font-medium text-slate-400">
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">MixedLM (REML)</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">VIF Pruning</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Circadian Profiling</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Actions -->
+                    <div class="p-6 pt-0 flex items-center justify-between gap-3 border-t border-slate-800/80 mt-4">
+                        <a href="polar-watch-fitness-analysis/index.html" class="flex-1 py-2 text-center text-xs font-bold rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-1.5">
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Launch Website
+                        </a>
+                        <a href="https://github.com/akshaysharma2005/polar-watch-fitness-analysis" target="_blank" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition-colors" title="View Source on GitHub">
+                            <i data-lucide="github" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 3: FX Trading Analysis -->
+                <div class="project-card group rounded-3xl glass-panel border border-slate-800 hover:border-amber-500/50 transition-all duration-300 flex flex-col justify-between overflow-hidden" data-category="finance">
+                    <div>
+                        <!-- Header Banner -->
+                        <div class="relative h-48 overflow-hidden bg-slate-900 border-b border-slate-800">
+                            <img src="fx-trading-analysis/img/drawdown.png" alt="FX Trading" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                            <div class="absolute top-4 left-4">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-500/90 text-white backdrop-blur-md">Quantitative Finance</span>
+                            </div>
+                            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
+                                <span>Profit Factor: 1.60</span>
+                                <span class="text-amber-400 font-bold">Payoff: 5.22x</span>
+                            </div>
+                        </div>
+                        <!-- Content -->
+                        <div class="p-6 space-y-4">
+                            <h4 class="text-xl font-bold text-white group-hover:text-amber-400 transition-colors">
+                                FX Trading Performance & Monte Carlo Risk Analytics
+                            </h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                92 algorithmic trades evaluated against geometric loss streak distributions and 100K-iteration Monte Carlo resamplings. Features in-browser 1,000-path stochastic equity simulator.
+                            </p>
+                            <!-- Highlights -->
+                            <div class="flex flex-wrap gap-2 text-[11px] font-medium text-slate-400">
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Monte Carlo 100K</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Geometric Loss PMF</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Expectancy: $14.85</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Actions -->
+                    <div class="p-6 pt-0 flex items-center justify-between gap-3 border-t border-slate-800/80 mt-4">
+                        <a href="fx-trading-analysis/index.html" class="flex-1 py-2 text-center text-xs font-bold rounded-xl bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-600/20 transition-all flex items-center justify-center gap-1.5">
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Launch Website
+                        </a>
+                        <a href="https://github.com/akshaysharma2005/fx-trading-analysis" target="_blank" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition-colors" title="View Source on GitHub">
+                            <i data-lucide="github" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 4: Global Terrorism EDA -->
+                <div class="project-card group rounded-3xl glass-panel border border-slate-800 hover:border-rose-500/50 transition-all duration-300 flex flex-col justify-between overflow-hidden" data-category="security">
+                    <div>
+                        <!-- Header Banner -->
+                        <div class="relative h-48 overflow-hidden bg-slate-900 border-b border-slate-800">
+                            <img src="global-terrorism-eda/img/top_five_groups_percent_ts.png" alt="Global Terrorism" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                            <div class="absolute top-4 left-4">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-rose-500/90 text-white backdrop-blur-md">Geopolitical Security</span>
+                            </div>
+                            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
+                                <span>83,606 Incidents</span>
+                                <span class="text-rose-400 font-bold">180K+ Fatalities</span>
+                            </div>
+                        </div>
+                        <!-- Content -->
+                        <div class="p-6 space-y-4">
+                            <h4 class="text-xl font-bold text-white group-hover:text-rose-400 transition-colors">
+                                Global Terrorism Database: Threat Matrix & Spatial EDA
+                            </h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Multi-decade intelligence EDA tracking 83,606 incidents from 2007–2017. Features animated time-lapse casualty playback, tactical group radar, and weapon attribution breakdown.
+                            </p>
+                            <!-- Highlights -->
+                            <div class="flex flex-wrap gap-2 text-[11px] font-medium text-slate-400">
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">R Tidyverse EDA</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Threat Radar</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Decade Timeline</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Actions -->
+                    <div class="p-6 pt-0 flex items-center justify-between gap-3 border-t border-slate-800/80 mt-4">
+                        <a href="global-terrorism-eda/index.html" class="flex-1 py-2 text-center text-xs font-bold rounded-xl bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/20 transition-all flex items-center justify-center gap-1.5">
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Launch Website
+                        </a>
+                        <a href="https://github.com/akshaysharma2005/global-terrorism-eda" target="_blank" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition-colors" title="View Source on GitHub">
+                            <i data-lucide="github" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 5: COVID-19 Analytics -->
+                <div class="project-card group rounded-3xl glass-panel border border-slate-800 hover:border-cyan-500/50 transition-all duration-300 flex flex-col justify-between overflow-hidden" data-category="health">
+                    <div>
+                        <!-- Header Banner -->
+                        <div class="relative h-48 overflow-hidden bg-slate-900 border-b border-slate-800">
+                            <img src="covid19-pandemic-analysis/img/growth_top_1_5.png" alt="COVID-19 Analytics" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                            <div class="absolute top-4 left-4">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-cyan-500/90 text-white backdrop-blur-md">Epidemiology & Public Health</span>
+                            </div>
+                            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
+                                <span>35M+ Cases Mapped</span>
+                                <span class="text-cyan-400 font-bold">World Bank Correlation</span>
+                            </div>
+                        </div>
+                        <!-- Content -->
+                        <div class="p-6 space-y-4">
+                            <h4 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">
+                                COVID-19 Global Trajectories & Socioeconomic Matrix
+                            </h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Harmonizes JHU CSSE surveillance with World Bank socioeconomic metrics. Features Day T0 outbreak alignment, exponential doubling curves, and bivariate scatter regression studio.
+                            </p>
+                            <!-- Highlights -->
+                            <div class="flex flex-wrap gap-2 text-[11px] font-medium text-slate-400">
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Day T0 Alignment</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">8x8 Corr Heatmap</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Doubling Velocities</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Actions -->
+                    <div class="p-6 pt-0 flex items-center justify-between gap-3 border-t border-slate-800/80 mt-4">
+                        <a href="covid19-pandemic-analysis/index.html" class="flex-1 py-2 text-center text-xs font-bold rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white shadow-lg shadow-cyan-600/20 transition-all flex items-center justify-center gap-1.5">
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Launch Website
+                        </a>
+                        <a href="https://github.com/akshaysharma2005/covid19-pandemic-analysis" target="_blank" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition-colors" title="View Source on GitHub">
+                            <i data-lucide="github" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Showcase Meta Summary Card -->
+                <div class="rounded-3xl glass-panel border border-indigo-500/30 p-6 flex flex-col justify-between bg-gradient-to-br from-indigo-950/30 via-slate-900 to-purple-950/20">
+                    <div class="space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+                            <i data-lucide="award" class="w-3.5 h-3.5"></i> Executive Summary
+                        </div>
+                        <h4 class="text-xl font-bold text-white">Full-Stack Data Science Architecture</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            All 5 projects are fully functional as standalone websites locally and synced to dedicated GitHub repositories. Zero external backend dependencies required for live simulation and interactive exploration.
+                        </p>
+                        <div class="space-y-2 text-xs font-mono text-slate-300 pt-2">
+                            <div class="flex justify-between"><span>Total PNG Graphics:</span><span class="text-emerald-400 font-bold">91 High-Res</span></div>
+                            <div class="flex justify-between"><span>Interactive Simulators:</span><span class="text-indigo-400 font-bold">5 Custom Built</span></div>
+                            <div class="flex justify-between"><span>GitHub Sync:</span><span class="text-purple-400 font-bold">6 Repos Online</span></div>
+                        </div>
+                    </div>
+                    <div class="pt-6 border-t border-slate-800">
+                        <a href="https://github.com/akshaysharma2005/data-analytics-portfolio-showcase" target="_blank" class="w-full py-2.5 text-xs font-bold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center justify-center gap-2 transition-colors">
+                            <i data-lucide="folder-git-2" class="w-4 h-4"></i> Master GitHub Repository
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Cross-Project Comparison Table -->
+        <section class="p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4">
+            <div>
+                <h3 class="text-2xl font-bold text-white">Cross-Project Methodology & Engineering Matrix</h3>
+                <p class="text-sm text-slate-400">Comparing technical frameworks, statistical formulations, and real-world impact across domains</p>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-slate-800">
+                <table class="w-full text-left text-xs font-sans">
+                    <thead class="bg-slate-900 text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-800">
+                        <tr>
+                            <th class="py-3 px-4">Project Domain</th>
+                            <th class="py-3 px-4">Data Scale</th>
+                            <th class="py-3 px-4">Core Algorithm / Method</th>
+                            <th class="py-3 px-4">Best Performance Metric</th>
+                            <th class="py-3 px-4">Interactive Web Feature</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 text-slate-300">
+                        <tr>
+                            <td class="py-3 px-4 font-bold text-indigo-400">Cracow Real Estate</td>
+                            <td class="py-3 px-4 font-mono">10,484 Flats</td>
+                            <td class="py-3 px-4 font-medium">VotingRegressor (MLP + GBR)</td>
+                            <td class="py-3 px-4 font-mono text-emerald-400">RMSE 116,478 PLN (MSLE 0.03)</td>
+                            <td class="py-3 px-4">Live Property Valuation & District Estimator</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-bold text-emerald-400">Polar Watch Telemetry</td>
+                            <td class="py-3 px-4 font-mono">283 Workouts</td>
+                            <td class="py-3 px-4 font-medium">Mixed Linear Models (REML)</td>
+                            <td class="py-3 px-4 font-mono text-emerald-400">RMSE 61.2 kcal (-23% vs OLS)</td>
+                            <td class="py-3 px-4">Biometric Calorie & Cardiac Predictor</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-bold text-amber-400">FX Algorithmic Trading</td>
+                            <td class="py-3 px-4 font-mono">92 Trades</td>
+                            <td class="py-3 px-4 font-medium">Monte Carlo + Geometric Loss PMF</td>
+                            <td class="py-3 px-4 font-mono text-emerald-400">Profit Factor 1.60 (Payoff 5.22x)</td>
+                            <td class="py-3 px-4">1,000-Path Live Equity Monte Carlo Engine</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-bold text-rose-400">Global Terrorism EDA</td>
+                            <td class="py-3 px-4 font-mono">83,606 Incidents</td>
+                            <td class="py-3 px-4 font-medium">Spatial Aggregation & GGplot2</td>
+                            <td class="py-3 px-4 font-mono text-emerald-400">180K+ Fatalities Decadal Matrix</td>
+                            <td class="py-3 px-4">Time-Lapse Threat & Group Tactical Radar</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-bold text-cyan-400">COVID-19 Epidemiology</td>
+                            <td class="py-3 px-4 font-mono">35M+ Cases</td>
+                            <td class="py-3 px-4 font-medium">T0 Alignment + Bivariate OLS</td>
+                            <td class="py-3 px-4 font-mono text-emerald-400">Rural Pop Corr r = -0.46</td>
+                            <td class="py-3 px-4">T0 Doubling Curve & Socioeconomic Studio</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-10 text-center text-xs text-slate-500 mt-20 glass-panel">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                Designed & Engineered by <span class="text-white font-bold">M Akshay Sharma</span> • CSE VIT-AP University
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="https://github.com/akshaysharma2005" target="_blank" class="hover:text-slate-300 transition-colors flex items-center gap-1">
+                    <i data-lucide="github" class="w-4 h-4"></i> GitHub
+                </a>
+                <span>•</span>
+                <span class="text-indigo-400 font-semibold">5 Projects Deployed Locally & on GitHub</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Project Filter
+        function filterProjects(cat) {
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach(card => {
+                if (cat === 'all' || card.getAttribute('data-category') === cat) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(b => {
+                if (b.getAttribute('data-filter') === cat) {
+                    b.className = 'filter-btn px-3 py-1.5 rounded-lg bg-indigo-600 text-white';
+                } else {
+                    b.className = 'filter-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700';
+                }
+            });
+        }
+
+        // Theme Toggle
+        const themeBtn = document.getElementById('theme-toggle');
+        themeBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-icon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
