@@ -133,5 +133,6 @@ Cross-national epidemiological trajectory analysis combining Johns Hopkins CSSE 
 
 **M Akshay Sharma**
 - GitHub: [@akshaysharma2005](https://github.com/akshaysharma2005)
+- LinkedIn: [M Akshay Sharma](https://www.linkedin.com/in/m-akshay-sharma-a7414b367/)
 - Computer Science & Engineering | VIT-AP University
 - Full Stack Web Developer & Data Analytics Enthusiast

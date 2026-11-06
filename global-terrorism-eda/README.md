@@ -321,7 +321,7 @@ See `requirements.txt` for version-pinned package list.
 **M Akshay Sharma**
 
 - GitHub: [@akshaysharma2005](https://github.com/akshaysharma2005)
-- LinkedIn: [in/akshaysharma2005](https://linkedin.com/in/akshaysharma2005)
+- LinkedIn: [M Akshay Sharma](https://www.linkedin.com/in/m-akshay-sharma-a7414b367/)
 
 ---
 
