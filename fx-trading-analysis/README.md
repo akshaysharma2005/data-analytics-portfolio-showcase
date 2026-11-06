@@ -1,6 +1,13 @@
 # Trading Results Analysis
 
 <p align="center">
+  <a href="https://akshaysharma2005.github.io/fx-trading-analysis/">
+    <img src="https://img.shields.io/badge/Live_Website-GitHub_Pages-indigo?style=for-the-badge&logo=githubpages&logoColor=white" alt="Live Demo">
+  </a>
+</p>
+
+
+<p align="center">
   <img src="https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white" alt="Python">
   <img src="https://img.shields.io/badge/Scipy-Statistics-blue" alt="Scipy">
   <img src="https://img.shields.io/badge/Matplotlib-Visualization-blue?logo=plotly&logoColor=white" alt="Matplotlib">
@@ -296,10 +303,10 @@ This project uses **financial trading data** containing instrument names, profit
 
 ## Author
 
-**Sarvesh Kumar Sharma**
+**M Akshay Sharma**
 
-- GitHub: [@shsarv](https://github.com/shsarv)
-- LinkedIn: [in/shsarv](https://linkedin.com/in/shsarv)
+- GitHub: [@akshaysharma2005](https://github.com/akshaysharma2005)
+- LinkedIn: [in/akshaysharma2005](https://linkedin.com/in/akshaysharma2005)
 
 ---
 

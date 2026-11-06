@@ -1,6 +1,13 @@
 # Global Terrorism Database Analysis
 
 <p align="center">
+  <a href="https://akshaysharma2005.github.io/global-terrorism-eda/">
+    <img src="https://img.shields.io/badge/Live_Website-GitHub_Pages-indigo?style=for-the-badge&logo=githubpages&logoColor=white" alt="Live Demo">
+  </a>
+</p>
+
+
+<p align="center">
   <img src="https://img.shields.io/badge/R-4.0%2B-blue?logo=r&logoColor=white" alt="R">
   <img src="https://img.shields.io/badge/Tidyverse-EDA-blue?logo=tidyverse&logoColor=white" alt="Tidyverse">
   <img src="https://img.shields.io/badge/GGally-Matrix-blue" alt="GGally">
@@ -311,10 +318,10 @@ See `requirements.txt` for version-pinned package list.
 
 ## Author
 
-**Sarvesh Kumar Sharma**
+**M Akshay Sharma**
 
-- GitHub: [@shsarv](https://github.com/shsarv)
-- LinkedIn: [in/shsarv](https://linkedin.com/in/shsarv)
+- GitHub: [@akshaysharma2005](https://github.com/akshaysharma2005)
+- LinkedIn: [in/akshaysharma2005](https://linkedin.com/in/akshaysharma2005)
 
 ---
 
